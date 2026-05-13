@@ -1063,136 +1063,170 @@ faqData.forEach(function(f, i) {
   faqList.appendChild(div);
 });
 
-// ===== RATING =====
-function initRating(chNum) {
-  var selectedVal = 0;
-  var stars = document.querySelectorAll('#stars-' + chNum + ' .star');
-  var btn = document.getElementById('btn-rate-' + chNum);
-  var result = document.getElementById('rating-result-' + chNum);
-  function getVotes() { try { return JSON.parse(localStorage.getItem('dbu_votes_ch' + chNum) || '[]'); } catch(e) { return []; } }
-  function showResult() {
-    var votes = getVotes();
-    if (votes.length === 0) { result.innerHTML = 'Se el primero en votar.'; return; }
-    var avg = votes.reduce(function(a,b){return a+b;},0) / votes.length;
-    var avgStr = votes.length >= 3 ? avg.toFixed(1) : avg.toFixed(0);
-    result.innerHTML = '<strong>' + avgStr + ' / 5</strong> - ' + votes.length + (votes.length === 1 ? ' voto' : ' votos');
-  }
-  var alreadyVoted = localStorage.getItem('dbu_voted_ch' + chNum);
-  if (alreadyVoted) {
-    btn.textContent = 'Ya votaste!';
-    btn.disabled = true;
-    stars.forEach(function(s) { if (parseInt(s.getAttribute('data-val')) <= parseInt(alreadyVoted)) s.classList.add('selected'); s.style.cursor = 'default'; });
-    showResult(); return;
-  }
-  stars.forEach(function(star) {
-    star.addEventListener('mouseenter', function() {
-      var val = parseInt(this.getAttribute('data-val'));
-      stars.forEach(function(s) { s.classList.toggle('hovered', parseInt(s.getAttribute('data-val')) <= val); });
-    });
-    star.addEventListener('mouseleave', function() { stars.forEach(function(s) { s.classList.remove('hovered'); }); });
-    star.addEventListener('click', function() {
-      selectedVal = parseInt(this.getAttribute('data-val'));
-      stars.forEach(function(s) { s.classList.toggle('selected', parseInt(s.getAttribute('data-val')) <= selectedVal); });
-      btn.disabled = false; showResult();
-    });
-  });
-  btn.addEventListener('click', function() {
-    if (!selectedVal) return;
-    var votes = getVotes();
-    votes.push(selectedVal);
-    try { localStorage.setItem('dbu_votes_ch' + chNum, JSON.stringify(votes)); } catch(e){}
-    localStorage.setItem('dbu_voted_ch' + chNum, selectedVal);
-    btn.textContent = 'Gracias por votar!';
-    btn.disabled = true;
-    stars.forEach(function(s) { s.style.cursor = 'default'; });
-    showResult();
-  });
-  showResult();
-}
 
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-// ===== COMMENTS =====
-function initComments(chNum) {
-  var nameInput = document.getElementById('comment-name-' + chNum);
-  var textInput = document.getElementById('comment-text-' + chNum);
-  var countEl   = document.getElementById('comment-count-' + chNum);
-  var submitBtn = document.getElementById('comment-submit-' + chNum);
-  var listEl    = document.getElementById('comments-list-' + chNum);
-
-  // Restore saved name
-  var savedName = localStorage.getItem('dbu_comment_name') || '';
-  nameInput.value = savedName;
-
-  // Char counter
-  textInput.addEventListener('input', function() {
-    var len = textInput.value.length;
-    countEl.textContent = len + ' / 280';
-    countEl.className = 'comment-char-count' + (len >= 280 ? ' over' : '');
-  });
-
-  // Save name on change
-  nameInput.addEventListener('change', function() {
-    localStorage.setItem('dbu_comment_name', nameInput.value.trim());
-  });
-
-  function getComments() {
-    try { return JSON.parse(localStorage.getItem('dbu_comments_ch' + chNum) || '[]'); } catch(e) { return []; }
-  }
-
-  function saveComments(arr) {
-    try { localStorage.setItem('dbu_comments_ch' + chNum, JSON.stringify(arr)); } catch(e) {}
-  }
-
-  function renderComments() {
-    var comments = getComments();
-    if (comments.length === 0) {
-      listEl.innerHTML = '<div class="no-comments">No hay comentarios todavia. ¡Se el primero!</div>';
-      return;
-    }
-    listEl.innerHTML = comments.map(function(c, i) {
-      return '<div class="comment-item" data-index="' + i + '">' +
-        '<div class="comment-author">' + escHtml(c.author) + '</div>' +
-        '<div class="comment-text">' + escHtml(c.text) + '</div>' +
-        '<div class="comment-date">' + c.date + '</div>' +
-        '</div>';
-    }).join('');
-  }
-
-  submitBtn.addEventListener('click', function() {
-    var author = nameInput.value.trim() || 'Saiyajin Anonimo';
-    var text   = textInput.value.trim();
-    if (!text) return;
-    if (text.length > 280) return;
-    var now = new Date();
-    var date = now.toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'}) + ' ' +
-               now.toLocaleTimeString('es-AR', {hour:'2-digit',minute:'2-digit'});
-    var comments = getComments();
-    comments.unshift({ author: author, text: text, date: date, id: Date.now() });
-    saveComments(comments);
-    localStorage.setItem('dbu_comment_name', author);
-    textInput.value = '';
-    countEl.textContent = '0 / 280';
-    renderComments();
-  });
-
-  renderComments();
-}
-
-// Helper to delete comment by index (call from console: deleteComment(1, index))
-window.deleteComment = function(chNum, index) {
-  var comments = [];
-  try { comments = JSON.parse(localStorage.getItem('dbu_comments_ch' + chNum) || '[]'); } catch(e) {}
-  comments.splice(index, 1);
-  localStorage.setItem('dbu_comments_ch' + chNum, JSON.stringify(comments));
-  initComments(chNum);
-  console.log('Comment deleted.');
+</script>
+<script>
+// ===== FIREBASE CONFIG =====
+var firebaseConfig = {
+  apiKey: "AIzaSyCdLi-sui9ydYjNnNv-wjmPhKEDuHy-grc",
+  authDomain: "dragon-ball-uan.firebaseapp.com",
+  databaseURL: "https://dragon-ball-uan-default-rtdb.firebaseio.com",
+  projectId: "dragon-ball-uan",
+  storageBucket: "dragon-ball-uan.firebasestorage.app",
+  messagingSenderId: "70067785530",
+  appId: "1:70067785530:web:cad0847094eb18eec84a03",
+  measurementId: "G-TFM985GSNM"
 };
 
-initComments(1);
-initRating(1);
+// Load Firebase from CDN
+function loadFirebase(callback) {
+  var scripts = [
+    'https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js',
+    'https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js',
+    'https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js'
+  ];
+  var loaded = 0;
+  scripts.forEach(function(src) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = function() {
+      loaded++;
+      if (loaded === scripts.length) callback();
+    };
+    document.head.appendChild(s);
+  });
+}
+
+loadFirebase(function() {
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.database();
+  var analytics = firebase.analytics();
+
+  // ===== REALTIME COMMENTS =====
+  function initComments(chNum) {
+    var nameInput   = document.getElementById('comment-name-' + chNum);
+    var textInput   = document.getElementById('comment-text-' + chNum);
+    var countEl     = document.getElementById('comment-count-' + chNum);
+    var submitBtn   = document.getElementById('comment-submit-' + chNum);
+    var listEl      = document.getElementById('comments-list-' + chNum);
+    if (!nameInput) return;
+
+    // Restore saved name
+    nameInput.value = localStorage.getItem('dbu_comment_name') || '';
+
+    textInput.addEventListener('input', function() {
+      var len = textInput.value.length;
+      countEl.textContent = len + ' / 280';
+      countEl.className = 'comment-char-count' + (len >= 280 ? ' over' : '');
+    });
+
+    nameInput.addEventListener('change', function() {
+      localStorage.setItem('dbu_comment_name', nameInput.value.trim());
+    });
+
+    // Listen for real-time comments
+    var ref = db.ref('comments/cap' + chNum);
+    ref.orderByChild('ts').on('value', function(snapshot) {
+      var comments = [];
+      snapshot.forEach(function(child) {
+        comments.unshift({key: child.key, val: child.val()});
+      });
+      if (comments.length === 0) {
+        listEl.innerHTML = '<div class="no-comments">No hay comentarios todavia. ¡Se el primero!</div>';
+        return;
+      }
+      listEl.innerHTML = comments.map(function(c) {
+        var d = new Date(c.val.ts);
+        var date = d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}) + ' ' +
+                   d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+        return '<div class="comment-item" data-key="' + c.key + '">' +
+          '<div class="comment-author">' + escHtml(c.val.author) + '</div>' +
+          '<div class="comment-text">' + escHtml(c.val.text) + '</div>' +
+          '<div class="comment-date">' + date + '</div>' +
+          '</div>';
+      }).join('');
+    });
+
+    submitBtn.addEventListener('click', function() {
+      var author = nameInput.value.trim() || 'Saiyajin Anonimo';
+      var text   = textInput.value.trim();
+      if (!text || text.length > 280) return;
+      localStorage.setItem('dbu_comment_name', author);
+      db.ref('comments/cap' + chNum).push({ author: author, text: text, ts: Date.now() });
+      textInput.value = '';
+      countEl.textContent = '0 / 280';
+    });
+  }
+
+  // Delete comment by key (call from console: deleteComment(1, '-KEY'))
+  window.deleteComment = function(chNum, key) {
+    db.ref('comments/cap' + chNum + '/' + key).remove();
+    console.log('Deleted.');
+  };
+
+  // ===== REALTIME RATINGS =====
+  function initRating(chNum) {
+    var stars   = document.querySelectorAll('#stars-' + chNum + ' .star');
+    var btn     = document.getElementById('btn-rate-' + chNum);
+    var result  = document.getElementById('rating-result-' + chNum);
+    var selectedVal = 0;
+    if (!btn) return;
+
+    var ratingsRef = db.ref('ratings/cap' + chNum);
+
+    // Listen for real-time rating updates
+    ratingsRef.on('value', function(snapshot) {
+      var votes = [];
+      snapshot.forEach(function(child) { votes.push(child.val()); });
+      if (votes.length === 0) {
+        result.innerHTML = 'Se el primero en votar.';
+      } else {
+        var avg = votes.reduce(function(a,b){return a+b;},0) / votes.length;
+        var avgStr = votes.length >= 3 ? avg.toFixed(1) : avg.toFixed(0);
+        result.innerHTML = '<strong>' + avgStr + ' / 5</strong> &nbsp;&#183;&nbsp; ' + votes.length + (votes.length === 1 ? ' voto' : ' votos');
+      }
+    });
+
+    var alreadyVoted = localStorage.getItem('dbu_voted_ch' + chNum);
+    if (alreadyVoted) {
+      btn.textContent = 'Ya votaste!';
+      btn.disabled = true;
+      stars.forEach(function(s) {
+        if (parseInt(s.getAttribute('data-val')) <= parseInt(alreadyVoted)) s.classList.add('selected');
+        s.style.cursor = 'default';
+      });
+      return;
+    }
+
+    stars.forEach(function(star) {
+      star.addEventListener('mouseenter', function() {
+        var val = parseInt(this.getAttribute('data-val'));
+        stars.forEach(function(s) { s.classList.toggle('hovered', parseInt(s.getAttribute('data-val')) <= val); });
+      });
+      star.addEventListener('mouseleave', function() {
+        stars.forEach(function(s) { s.classList.remove('hovered'); });
+      });
+      star.addEventListener('click', function() {
+        selectedVal = parseInt(this.getAttribute('data-val'));
+        stars.forEach(function(s) { s.classList.toggle('selected', parseInt(s.getAttribute('data-val')) <= selectedVal); });
+        btn.disabled = false;
+      });
+    });
+
+    btn.addEventListener('click', function() {
+      if (!selectedVal) return;
+      var voteId = 'v_' + Date.now() + '_' + Math.random().toString(36).substr(2,5);
+      ratingsRef.child(voteId).set(selectedVal);
+      localStorage.setItem('dbu_voted_ch' + chNum, selectedVal);
+      btn.textContent = 'Gracias por votar!';
+      btn.disabled = true;
+      stars.forEach(function(s) { s.style.cursor = 'default'; });
+    });
+  }
+
+  initComments(1);
+  initRating(1);
+});
 
 </script>
 </body>
