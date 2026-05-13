@@ -875,10 +875,16 @@ function openFullscreen(chNum) {
     top.classList.remove('visible');
   } else {
     mobileClose.style.display = 'none';
-    // Desktop: show bars
+    // Desktop: show bars then auto-hide after 2.5s
     barsVisible = true;
     document.getElementById('fs-top-bar').classList.remove('hidden');
     document.getElementById('fs-bottom-bar').classList.remove('hidden');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function() {
+      document.getElementById('fs-top-bar').classList.add('hidden');
+      document.getElementById('fs-bottom-bar').classList.add('hidden');
+      barsVisible = false;
+    }, 2500);
   }
 
   preloadInitial(chNum);
@@ -979,27 +985,35 @@ document.addEventListener('keydown', function(e) {
 
 var barsVisible = true;
 var isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+var hideTimer = null;
+
+function showFsBars() {
+  if (isMobile) return; // Never show bars on mobile
+  var top = document.getElementById('fs-top-bar');
+  var bot = document.getElementById('fs-bottom-bar');
+  top.classList.remove('hidden');
+  bot.classList.remove('hidden');
+  barsVisible = true;
+  clearTimeout(hideTimer);
+  hideTimer = setTimeout(function() {
+    top.classList.add('hidden');
+    bot.classList.add('hidden');
+    barsVisible = false;
+  }, 2500);
+}
+
+// Show bars on mouse move (desktop only)
+document.getElementById('fs-overlay').addEventListener('mousemove', function() {
+  if (fsActive && !isMobile) showFsBars();
+});
 
 document.getElementById('fs-page-wrap').addEventListener('click', function(e) {
   if (e.target.closest('button')) return;
   if (isMobile) {
-    // On mobile: toggle close button only
     var mobileClose = document.getElementById('fs-mobile-close');
     barsVisible = !barsVisible;
-    if (barsVisible) {
-      mobileClose.style.opacity = '1';
-      mobileClose.style.pointerEvents = 'auto';
-    } else {
-      mobileClose.style.opacity = '0';
-      mobileClose.style.pointerEvents = 'none';
-    }
-  } else {
-    // On desktop: toggle top and bottom bars
-    barsVisible = !barsVisible;
-    var top = document.getElementById('fs-top-bar');
-    var bot = document.getElementById('fs-bottom-bar');
-    if (barsVisible) { top.classList.remove('hidden'); bot.classList.remove('hidden'); }
-    else { top.classList.add('hidden'); bot.classList.add('hidden'); }
+    mobileClose.style.opacity = barsVisible ? '1' : '0';
+    mobileClose.style.pointerEvents = barsVisible ? 'auto' : 'none';
   }
 });
 
@@ -1073,166 +1087,154 @@ faqData.forEach(function(f, i) {
 
 </script>
 <script>
-// ===== FIREBASE CONFIG =====
-var firebaseConfig = {
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+var FB_CONFIG = {
   apiKey: "AIzaSyCdLi-sui9ydYjNnNv-wjmPhKEDuHy-grc",
   authDomain: "dragon-ball-uan.firebaseapp.com",
   databaseURL: "https://dragon-ball-uan-default-rtdb.firebaseio.com",
   projectId: "dragon-ball-uan",
   storageBucket: "dragon-ball-uan.firebasestorage.app",
   messagingSenderId: "70067785530",
-  appId: "1:70067785530:web:cad0847094eb18eec84a03",
-  measurementId: "G-TFM985GSNM"
+  appId: "1:70067785530:web:cad0847094eb18eec84a03"
 };
 
-// Load Firebase from CDN
-function loadFirebase(callback) {
-  var scripts = [
-    'https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js',
-    'https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js'
-  ];
-  var loaded = 0;
-  scripts.forEach(function(src) {
-    var s = document.createElement('script');
-    s.src = src;
-    s.onload = function() {
-      loaded++;
-      if (loaded === scripts.length) callback();
-    };
-    document.head.appendChild(s);
-  });
+function loadScript(src, cb) {
+  var s = document.createElement('script');
+  s.src = src;
+  s.onload = cb;
+  s.onerror = function() { console.error('Failed to load: ' + src); };
+  document.head.appendChild(s);
 }
 
-loadFirebase(function() {
-  firebase.initializeApp(firebaseConfig);
-  var db = firebase.database();
+loadScript('https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js', function() {
+  loadScript('https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js', function() {
+    firebase.initializeApp(FB_CONFIG);
+    var db = firebase.database();
 
-  // ===== REALTIME COMMENTS =====
-  function initComments(chNum) {
-    var nameInput   = document.getElementById('comment-name-' + chNum);
-    var textInput   = document.getElementById('comment-text-' + chNum);
-    var countEl     = document.getElementById('comment-count-' + chNum);
-    var submitBtn   = document.getElementById('comment-submit-' + chNum);
-    var listEl      = document.getElementById('comments-list-' + chNum);
-    if (!nameInput) return;
+    // ===== RATINGS =====
+    function initRating(chNum) {
+      var stars  = document.querySelectorAll('#stars-' + chNum + ' .star');
+      var btn    = document.getElementById('btn-rate-' + chNum);
+      var result = document.getElementById('rating-result-' + chNum);
+      if (!btn) return;
+      var selectedVal = 0;
+      var ratingsRef = db.ref('ratings/cap' + chNum);
 
-    // Restore saved name
-    nameInput.value = localStorage.getItem('dbu_comment_name') || '';
-
-    textInput.addEventListener('input', function() {
-      var len = textInput.value.length;
-      countEl.textContent = len + ' / 280';
-      countEl.className = 'comment-char-count' + (len >= 280 ? ' over' : '');
-    });
-
-    nameInput.addEventListener('change', function() {
-      localStorage.setItem('dbu_comment_name', nameInput.value.trim());
-    });
-
-    // Listen for real-time comments
-    var ref = db.ref('comments/cap' + chNum);
-    ref.orderByChild('ts').on('value', function(snapshot) {
-      var comments = [];
-      snapshot.forEach(function(child) {
-        comments.unshift({key: child.key, val: child.val()});
+      ratingsRef.on('value', function(snap) {
+        var votes = [];
+        snap.forEach(function(c) { votes.push(c.val()); });
+        if (votes.length === 0) {
+          result.innerHTML = 'Se el primero en votar.';
+        } else {
+          var avg = votes.reduce(function(a,b){return a+b;},0) / votes.length;
+          result.innerHTML = '<strong>' + (votes.length >= 3 ? avg.toFixed(1) : avg.toFixed(0)) + ' / 5</strong> &nbsp;&#183;&nbsp; ' + votes.length + (votes.length === 1 ? ' voto' : ' votos');
+        }
       });
-      if (comments.length === 0) {
-        listEl.innerHTML = '<div class="no-comments">No hay comentarios todavia. ¡Se el primero!</div>';
+
+      var alreadyVoted = localStorage.getItem('dbu_voted_ch' + chNum);
+      if (alreadyVoted) {
+        btn.textContent = 'Ya votaste!';
+        btn.disabled = true;
+        stars.forEach(function(s) {
+          if (parseInt(s.getAttribute('data-val')) <= parseInt(alreadyVoted)) s.classList.add('selected');
+          s.style.cursor = 'default';
+        });
         return;
       }
-      listEl.innerHTML = comments.map(function(c) {
-        var d = new Date(c.val.ts);
-        var date = d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}) + ' ' +
-                   d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
-        return '<div class="comment-item" data-key="' + c.key + '">' +
-          '<div class="comment-author">' + escHtml(c.val.author) + '</div>' +
-          '<div class="comment-text">' + escHtml(c.val.text) + '</div>' +
-          '<div class="comment-date">' + date + '</div>' +
-          '</div>';
-      }).join('');
-    });
 
-    submitBtn.addEventListener('click', function() {
-      var author = nameInput.value.trim() || 'Saiyajin Anonimo';
-      var text   = textInput.value.trim();
-      if (!text || text.length > 280) return;
-      localStorage.setItem('dbu_comment_name', author);
-      db.ref('comments/cap' + chNum).push({ author: author, text: text, ts: Date.now() });
-      textInput.value = '';
-      countEl.textContent = '0 / 280';
-    });
-  }
-
-  // Delete comment by key (call from console: deleteComment(1, '-KEY'))
-  window.deleteComment = function(chNum, key) {
-    db.ref('comments/cap' + chNum + '/' + key).remove();
-    console.log('Deleted.');
-  };
-
-  // ===== REALTIME RATINGS =====
-  function initRating(chNum) {
-    var stars   = document.querySelectorAll('#stars-' + chNum + ' .star');
-    var btn     = document.getElementById('btn-rate-' + chNum);
-    var result  = document.getElementById('rating-result-' + chNum);
-    var selectedVal = 0;
-    if (!btn) return;
-
-    var ratingsRef = db.ref('ratings/cap' + chNum);
-
-    // Listen for real-time rating updates
-    ratingsRef.on('value', function(snapshot) {
-      var votes = [];
-      snapshot.forEach(function(child) { votes.push(child.val()); });
-      if (votes.length === 0) {
-        result.innerHTML = 'Se el primero en votar.';
-      } else {
-        var avg = votes.reduce(function(a,b){return a+b;},0) / votes.length;
-        var avgStr = votes.length >= 3 ? avg.toFixed(1) : avg.toFixed(0);
-        result.innerHTML = '<strong>' + avgStr + ' / 5</strong> &nbsp;&#183;&nbsp; ' + votes.length + (votes.length === 1 ? ' voto' : ' votos');
-      }
-    });
-
-    var alreadyVoted = localStorage.getItem('dbu_voted_ch' + chNum);
-    if (alreadyVoted) {
-      btn.textContent = 'Ya votaste!';
-      btn.disabled = true;
-      stars.forEach(function(s) {
-        if (parseInt(s.getAttribute('data-val')) <= parseInt(alreadyVoted)) s.classList.add('selected');
-        s.style.cursor = 'default';
+      stars.forEach(function(star) {
+        star.addEventListener('mouseenter', function() {
+          var val = parseInt(this.getAttribute('data-val'));
+          stars.forEach(function(s) { s.classList.toggle('hovered', parseInt(s.getAttribute('data-val')) <= val); });
+        });
+        star.addEventListener('mouseleave', function() {
+          stars.forEach(function(s) { s.classList.remove('hovered'); });
+        });
+        star.addEventListener('click', function() {
+          selectedVal = parseInt(this.getAttribute('data-val'));
+          stars.forEach(function(s) { s.classList.toggle('selected', parseInt(s.getAttribute('data-val')) <= selectedVal); });
+          btn.disabled = false;
+        });
       });
-      return;
+
+      btn.addEventListener('click', function() {
+        if (!selectedVal) return;
+        ratingsRef.child('v_' + Date.now()).set(selectedVal);
+        localStorage.setItem('dbu_voted_ch' + chNum, selectedVal);
+        btn.textContent = 'Gracias por votar!';
+        btn.disabled = true;
+        stars.forEach(function(s) { s.style.cursor = 'default'; });
+      });
     }
 
-    stars.forEach(function(star) {
-      star.addEventListener('mouseenter', function() {
-        var val = parseInt(this.getAttribute('data-val'));
-        stars.forEach(function(s) { s.classList.toggle('hovered', parseInt(s.getAttribute('data-val')) <= val); });
-      });
-      star.addEventListener('mouseleave', function() {
-        stars.forEach(function(s) { s.classList.remove('hovered'); });
-      });
-      star.addEventListener('click', function() {
-        selectedVal = parseInt(this.getAttribute('data-val'));
-        stars.forEach(function(s) { s.classList.toggle('selected', parseInt(s.getAttribute('data-val')) <= selectedVal); });
-        btn.disabled = false;
-      });
-    });
+    // ===== COMMENTS =====
+    function initComments(chNum) {
+      var nameInput = document.getElementById('comment-name-' + chNum);
+      var textInput = document.getElementById('comment-text-' + chNum);
+      var countEl   = document.getElementById('comment-count-' + chNum);
+      var submitBtn = document.getElementById('comment-submit-' + chNum);
+      var listEl    = document.getElementById('comments-list-' + chNum);
+      if (!nameInput || !listEl) return;
 
-    btn.addEventListener('click', function() {
-      if (!selectedVal) return;
-      var voteId = 'v_' + Date.now() + '_' + Math.random().toString(36).substr(2,5);
-      ratingsRef.child(voteId).set(selectedVal);
-      localStorage.setItem('dbu_voted_ch' + chNum, selectedVal);
-      btn.textContent = 'Gracias por votar!';
-      btn.disabled = true;
-      stars.forEach(function(s) { s.style.cursor = 'default'; });
-    });
-  }
+      nameInput.value = localStorage.getItem('dbu_comment_name') || '';
 
-  initComments(1);
-  initRating(1);
+      textInput.addEventListener('input', function() {
+        var len = textInput.value.length;
+        countEl.textContent = len + ' / 280';
+        countEl.className = 'comment-char-count' + (len >= 280 ? ' over' : '');
+      });
+
+      var commentsRef = db.ref('comments/cap' + chNum);
+
+      commentsRef.orderByChild('ts').on('value', function(snap) {
+        var items = [];
+        snap.forEach(function(c) { items.push({key: c.key, val: c.val()}); });
+        items.reverse();
+        if (items.length === 0) {
+          listEl.innerHTML = '<div class="no-comments">No hay comentarios todavia. ¡Se el primero!</div>';
+          return;
+        }
+        listEl.innerHTML = items.map(function(c) {
+          var d = new Date(c.val.ts);
+          var date = d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}) + ' ' +
+                     d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+          return '<div class="comment-item" data-key="' + escHtml(c.key) + '">' +
+            '<div class="comment-author">' + escHtml(c.val.author) + '</div>' +
+            '<div class="comment-text">' + escHtml(c.val.text) + '</div>' +
+            '<div class="comment-date">' + date + '</div>' +
+            '</div>';
+        }).join('');
+      });
+
+      submitBtn.addEventListener('click', function() {
+        var author = nameInput.value.trim() || 'Saiyajin Anonimo';
+        var text   = textInput.value.trim();
+        if (!text || text.length > 280) return;
+        localStorage.setItem('dbu_comment_name', author);
+        commentsRef.push({ author: author, text: text, ts: Date.now() });
+        textInput.value = '';
+        countEl.textContent = '0 / 280';
+        // Thank you message
+        var thanks = document.createElement('div');
+        thanks.style.cssText = 'font-family:Bangers,cursive;letter-spacing:2px;color:var(--yellow);font-size:1.1rem;text-align:center;padding:8px 0;animation:fadeIn 0.3s ease;';
+        thanks.textContent = '¡GRACIAS POR COMENTAR!';
+        listEl.parentNode.insertBefore(thanks, listEl);
+        setTimeout(function(){ if(thanks.parentNode) thanks.parentNode.removeChild(thanks); }, 3000);
+      });
+    }
+
+    window.deleteComment = function(chNum, key) {
+      db.ref('comments/cap' + chNum + '/' + key).remove();
+      console.log('Deleted.');
+    };
+
+    initRating(1);
+    initComments(1);
+  });
 });
-
 </script>
 </body>
 </html>
