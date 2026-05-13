@@ -1,0 +1,872 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+  <title><data:blog.pageTitle/></title>
+  <link href='https://fonts.googleapis.com/css2?family=Bangers&amp;family=Noto+Sans+JP:wght@400;700&amp;display=swap' rel='stylesheet' type='text/css'/>
+  <b:skin><![CDATA[
+:root {
+      --yellow: #facc15;
+      --blue: #1e3a8a;
+      --blue-light: #3b82f6;
+      --dark: #050508;
+      --dark2: #0d0d14;
+      --dark3: #12121c;
+      --dark4: #1a1a2e;
+      --text: #dde1f0;
+      --muted: #8890aa;
+      --radius: 6px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 90% 50% at 50% -5%, rgba(30,58,138,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 30% at 85% 95%, rgba(250,204,21,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 40% at 10% 80%, rgba(59,130,246,0.05) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 8%  12%, rgba(255,255,255,0.55) 0%, transparent 100%),
+        radial-gradient(1px 1px at 22% 38%, rgba(255,255,255,0.4)  0%, transparent 100%),
+        radial-gradient(1px 1px at 43%  7%, rgba(255,255,255,0.5)  0%, transparent 100%),
+        radial-gradient(1px 1px at 61% 28%, rgba(255,255,255,0.3)  0%, transparent 100%),
+        radial-gradient(1px 1px at 77% 54%, rgba(255,255,255,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 89% 19%, rgba(255,255,255,0.4)  0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 68%, rgba(255,255,255,0.3)  0%, transparent 100%),
+        radial-gradient(1px 1px at 56% 83%, rgba(255,255,255,0.4)  0%, transparent 100%),
+        radial-gradient(1px 1px at 93% 73%, rgba(255,255,255,0.5)  0%, transparent 100%),
+        radial-gradient(1px 1px at 14% 88%, rgba(255,255,255,0.3)  0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 68%  9%, rgba(250,204,21,0.55) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 42% 53%, rgba(250,204,21,0.35) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 19% 44%, rgba(59,130,246,0.5)  0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 81% 61%, rgba(59,130,246,0.4)  0%, transparent 100%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* HEADER */
+    header {
+      position: relative; z-index: 10;
+      text-align: center;
+      padding: 32px 20px 0;
+      background: linear-gradient(180deg, rgba(5,5,8,0.9) 0%, transparent 100%);
+    }
+    .logo-img {
+      max-width: min(480px, 82vw);
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      animation: logoFloat 4s ease-in-out infinite;
+      /* No background — transparent PNG */
+    }
+    @keyframes logoFloat {
+      0%,100% { filter: drop-shadow(0 0 22px rgba(250,204,21,0.4)) drop-shadow(0 0 45px rgba(30,58,138,0.5)); transform: translateY(0); }
+      50%      { filter: drop-shadow(0 0 40px rgba(250,204,21,0.65)) drop-shadow(0 0 70px rgba(30,58,138,0.65)); transform: translateY(-5px); }
+    }
+    .tagline {
+      font-family: 'Bangers', cursive;
+      letter-spacing: 5px; color: var(--muted);
+      font-size: 0.82rem; margin-top: 10px;
+      text-transform: uppercase;
+    }
+
+    /* NAVBAR */
+    nav {
+      display: flex; justify-content: center;
+      flex-wrap: wrap; gap: 2px;
+      padding: 12px 16px; margin-top: 18px;
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(5,5,8,0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(30,58,138,0.4);
+      border-top: 1px solid rgba(250,204,21,0.08);
+    }
+    nav a {
+      font-family: 'Bangers', cursive;
+      font-size: 0.92rem; letter-spacing: 2px;
+      color: var(--muted); text-decoration: none;
+      padding: 6px 14px; border-radius: var(--radius);
+      transition: all 0.2s; text-transform: uppercase;
+      position: relative; cursor: pointer;
+    }
+    nav a:hover, nav a.active { color: var(--yellow); background: rgba(30,58,138,0.3); }
+    nav a.active::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 55%; height: 2px;
+      background: linear-gradient(90deg, var(--blue-light), var(--yellow));
+      border-radius: 99px;
+    }
+
+    /* MAIN */
+    main {
+      position: relative; z-index: 1;
+      max-width: 1060px; margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+    .section { display: none; animation: fadeIn 0.35s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(10px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .section-title {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(1.8rem,5vw,2.8rem);
+      letter-spacing: 3px; color: var(--yellow);
+      margin-bottom: 28px;
+      display: flex; align-items: center; gap: 12px;
+      text-shadow: 0 0 20px rgba(250,204,21,0.3);
+    }
+    .section-title::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, rgba(30,58,138,0.8) 0%, transparent 100%);
+    }
+
+    /* INICIO */
+    .hero-banner {
+      border-radius: 12px; overflow: hidden;
+      margin-bottom: 36px;
+      border: 1px solid rgba(30,58,138,0.4);
+      position: relative; background: var(--dark2);
+    }
+    .hero-bg {
+      width: 100%; height: 320px;
+      background: linear-gradient(135deg, #050508 0%, #0d0d1f 50%, #0a0a18 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem; color: rgba(30,58,138,0.25);
+    }
+    .hero-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 24px 28px;
+      background: linear-gradient(0deg, rgba(5,5,8,0.97) 0%, rgba(5,5,8,0.65) 60%, transparent 100%);
+    }
+    .hero-tag { font-size:0.68rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:6px; }
+    .hero-title { font-family:'Bangers',cursive; font-size:clamp(1.5rem,4vw,2.3rem); letter-spacing:2px; color:var(--yellow); text-shadow:0 0 20px rgba(250,204,21,0.4); margin-bottom:8px; }
+    .hero-desc { font-size:0.88rem; color:var(--muted); max-width:600px; }
+    .hero-btn {
+      display: inline-block; margin-top: 14px;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+      color: var(--yellow); font-family:'Bangers',cursive;
+      letter-spacing:2px; font-size:1rem; padding:10px 28px;
+      border-radius:var(--radius); text-decoration:none;
+      border:1px solid rgba(250,204,21,0.3); cursor:pointer; transition:all 0.2s;
+    }
+    .hero-btn:hover { background: linear-gradient(135deg,var(--blue-light) 0%,var(--yellow) 100%); color:var(--dark); }
+
+    .latest-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:16px; }
+    .post-card {
+      background:var(--dark2); border:1px solid rgba(30,58,138,0.25);
+      border-radius:10px; overflow:hidden;
+      transition:transform 0.2s,border-color 0.2s; cursor:pointer;
+    }
+    .post-card:hover { transform:translateY(-4px); border-color:rgba(250,204,21,0.4); }
+    .post-card-icon {
+      height:100px; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg,var(--dark3),var(--dark4));
+      font-size:2.5rem; border-bottom:1px solid rgba(30,58,138,0.2);
+    }
+    .post-card-body { padding:14px 16px; }
+    .post-tag { font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--blue-light); margin-bottom:5px; }
+    .post-card-body h3 { font-size:0.93rem; font-weight:700; color:var(--text); margin-bottom:6px; }
+    .post-card-body p { font-size:0.82rem; color:var(--muted); line-height:1.5; }
+    .post-date { font-size:0.72rem; color:#555; margin-top:8px; }
+
+    /* MANGA */
+    .chapter-entry {
+      background:var(--dark2);
+      border:1px solid rgba(30,58,138,0.25);
+      border-radius:10px; overflow:hidden; margin-bottom:16px;
+    }
+    .chapter-header {
+      display:flex; align-items:center;
+      justify-content:space-between;
+      padding:16px 22px; cursor:pointer; transition:background 0.2s;
+    }
+    .chapter-header:hover { background:rgba(30,58,138,0.15); }
+    .chapter-info { display:flex; align-items:center; gap:16px; flex:1; }
+    .chapter-num {
+      font-family:'Bangers',cursive; font-size:1.6rem;
+      color:var(--yellow); letter-spacing:1px; min-width:90px;
+      text-shadow:0 0 10px rgba(250,204,21,0.3);
+    }
+    .chapter-meta h3 { font-size:1rem; font-weight:700; color:var(--text); margin-bottom:3px; }
+    .chapter-meta span { font-size:0.78rem; color:var(--muted); }
+    .btn-read {
+      background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 100%);
+      color:var(--yellow); font-family:'Bangers',cursive;
+      letter-spacing:2px; font-size:0.9rem; border:none;
+      padding:8px 22px; border-radius:var(--radius); cursor:pointer;
+      transition:all 0.2s; border:1px solid rgba(250,204,21,0.2);
+    }
+    .btn-read:hover { background:linear-gradient(135deg,var(--blue-light) 0%,var(--yellow) 100%); color:var(--dark); }
+
+    .manga-pages { display:none; padding:20px; border-top:1px solid rgba(30,58,138,0.2); background:#000; }
+    .manga-pages.open { display:block; }
+    .manga-pages img { width:100%; max-width:760px; display:block; margin:0 auto 6px; border-radius:3px; }
+
+    .manga-nav {
+      display:flex; justify-content:center;
+      align-items:center; gap:16px; padding:16px 0 4px;
+    }
+    .manga-nav button {
+      background:var(--dark3); border:1px solid rgba(30,58,138,0.4);
+      color:var(--text); font-family:'Bangers',cursive;
+      letter-spacing:1px; font-size:0.9rem;
+      padding:8px 20px; border-radius:var(--radius); cursor:pointer; transition:all 0.2s;
+    }
+    .manga-nav button:hover { background:rgba(30,58,138,0.4); border-color:var(--yellow); color:var(--yellow); }
+    .manga-nav button:disabled { opacity:0.3; cursor:not-allowed; }
+    .page-counter { font-family:'Bangers',cursive; letter-spacing:2px; color:var(--muted); font-size:1rem; }
+
+    /* NOVEDADES */
+    .news-item {
+      background:var(--dark2); border:1px solid rgba(30,58,138,0.2);
+      border-left:3px solid var(--blue-light);
+      border-radius:0 8px 8px 0; padding:18px 22px; margin-bottom:14px;
+    }
+    .news-item h3 { font-size:1.05rem; color:var(--yellow); margin-bottom:6px; font-weight:700; }
+    .news-item p { font-size:0.88rem; color:var(--muted); line-height:1.65; }
+    .news-date { font-size:0.73rem; color:#44475a; margin-top:10px; }
+
+    .community-box {
+      background:var(--dark2); border:1px solid rgba(30,58,138,0.3);
+      border-radius:10px; padding:24px; margin-top:32px;
+    }
+    .community-box h3 { font-family:'Bangers',cursive; font-size:1.4rem; letter-spacing:2px; color:var(--blue-light); margin-bottom:16px; }
+    .community-box input, .community-box textarea {
+      width:100%; background:var(--dark3);
+      border:1px solid rgba(30,58,138,0.3); border-radius:var(--radius);
+      color:var(--text); font-family:'Noto Sans JP',sans-serif;
+      font-size:0.88rem; padding:10px 14px; outline:none;
+      margin-bottom:10px; transition:border-color 0.2s;
+    }
+    .community-box input:focus, .community-box textarea:focus { border-color:var(--blue-light); }
+    .community-box textarea { resize:vertical; min-height:80px; }
+    .btn-send {
+      background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 100%);
+      color:var(--yellow); font-family:'Bangers',cursive;
+      letter-spacing:2px; font-size:1rem;
+      border:1px solid rgba(250,204,21,0.2); padding:10px 28px;
+      border-radius:var(--radius); cursor:pointer; transition:all 0.2s;
+    }
+    .btn-send:hover { background:linear-gradient(135deg,var(--blue-light) 0%,var(--yellow) 100%); color:var(--dark); }
+    .community-messages { margin-top:20px; display:flex; flex-direction:column; gap:10px; }
+    .community-msg { background:var(--dark3); border-radius:var(--radius); padding:12px 16px; border-left:2px solid rgba(59,130,246,0.4); }
+    .community-msg .msg-author { font-size:0.78rem; font-weight:700; color:var(--blue-light); margin-bottom:4px; }
+    .community-msg .msg-text { font-size:0.88rem; color:var(--muted); }
+
+    /* FAQ */
+    .faq-item { background:var(--dark2); border:1px solid rgba(30,58,138,0.2); border-radius:var(--radius); overflow:hidden; margin-bottom:10px; }
+    .faq-question { display:flex; justify-content:space-between; align-items:center; padding:15px 20px; cursor:pointer; font-weight:700; font-size:0.92rem; color:var(--text); transition:background 0.2s; gap:12px; }
+    .faq-question:hover { background:rgba(30,58,138,0.15); }
+    .faq-icon { font-family:'Bangers',cursive; font-size:1.3rem; color:var(--blue-light); flex-shrink:0; transition:transform 0.2s; }
+    .faq-item.open .faq-icon { transform:rotate(45deg); color:var(--yellow); }
+    .faq-answer { display:none; padding:0 20px 16px; font-size:0.88rem; color:var(--muted); line-height:1.7; border-top:1px solid rgba(30,58,138,0.15); }
+    .faq-item.open .faq-answer { display:block; }
+
+    /* CONTACTO */
+    .contact-links { display:flex; flex-direction:column; gap:12px; max-width:540px; }
+    .contact-link {
+      display:flex; align-items:center; gap:14px;
+      background:var(--dark2); border:1px solid rgba(30,58,138,0.25);
+      border-radius:var(--radius); padding:14px 18px;
+      text-decoration:none; color:var(--text); transition:all 0.2s;
+    }
+    .contact-link:hover { border-color:var(--yellow); background:rgba(30,58,138,0.2); color:var(--yellow); }
+    .contact-link-icon { font-size:1.3rem; }
+    .contact-link-info { flex:1; }
+    .contact-link-info strong { display:block; font-size:0.7rem; color:var(--blue-light); margin-bottom:2px; letter-spacing:1px; text-transform:uppercase; }
+    .contact-link-info span { font-size:0.9rem; }
+
+    /* CREDITOS */
+    .credits-wrap { max-width:640px; margin:0 auto; text-align:center; }
+    .credits-logo-img { max-width:260px; margin:0 auto 20px; display:block; filter:drop-shadow(0 0 18px rgba(250,204,21,0.3)); }
+    .credits-desc { font-size:0.9rem; color:var(--muted); line-height:1.8; margin-bottom:28px; text-align:left; }
+    .credits-list { display:flex; flex-direction:column; gap:10px; text-align:left; margin-bottom:28px; }
+    .credits-item { background:var(--dark2); border-left:3px solid var(--blue-light); border-radius:0 var(--radius) var(--radius) 0; padding:14px 18px; }
+    .credits-item strong { display:block; color:var(--yellow); margin-bottom:3px; }
+    .credits-item span { font-size:0.83rem; color:var(--muted); }
+    .disclaimer { background:var(--dark2); border:1px solid rgba(255,255,255,0.05); border-radius:var(--radius); padding:16px 20px; font-size:0.79rem; color:#44475a; line-height:1.7; text-align:left; }
+
+    /* PERSONAJES */
+    .coming-soon { background:var(--dark2); border:1px solid rgba(30,58,138,0.25); border-radius:10px; padding:48px 32px; text-align:center; }
+
+    /* FOOTER */
+    footer { position:relative; z-index:1; text-align:center; padding:24px 20px; border-top:1px solid rgba(30,58,138,0.25); font-size:0.78rem; color:#33364a; }
+    footer span { color:var(--blue-light); }
+
+    /* RATING */
+    .rating-box {
+      max-width: 760px; margin: 28px auto 0;
+      background: var(--dark2);
+      border: 1px solid rgba(30,58,138,0.3);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+    }
+    .rating-box h4 {
+      font-family: 'Bangers', cursive;
+      font-size: 1.3rem; letter-spacing: 2px;
+      color: var(--yellow); margin-bottom: 16px;
+    }
+    .stars {
+      display: flex; justify-content: center;
+      gap: 8px; margin-bottom: 14px;
+    }
+    .star {
+      font-size: 2.2rem; cursor: pointer;
+      color: #333;
+      transition: color 0.15s, transform 0.15s;
+      user-select: none;
+    }
+    .star:hover, .star.hovered, .star.selected { color: var(--yellow); transform: scale(1.15); }
+    .rating-result {
+      font-size: 0.88rem; color: var(--muted); margin-top: 8px; min-height: 22px;
+    }
+    .rating-result strong { color: var(--yellow); font-size: 1.1rem; }
+    .btn-rate {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+      color: var(--yellow); font-family: 'Bangers', cursive;
+      letter-spacing: 2px; font-size: 1rem;
+      border: 1px solid rgba(250,204,21,0.2);
+      padding: 9px 26px; border-radius: var(--radius);
+      cursor: pointer; transition: all 0.2s; margin-top: 10px;
+    }
+    .btn-rate:hover { background: linear-gradient(135deg,var(--blue-light) 0%,var(--yellow) 100%); color: var(--dark); }
+    .btn-rate:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @media(max-width:600px){
+      .chapter-header { flex-wrap:wrap; gap:10px; }
+      nav a { font-size:0.8rem; padding:5px 9px; letter-spacing:1px; }
+    }
+  ]]></b:skin>
+</head>
+<body>
+<b:section id='main' class='main' maxwidgets='99' showaddelement='no'>
+<b:widget id='HTML1' locked='true' title='' type='HTML'>
+<b:widget-settings/>
+<b:includable id='main'>
+<header>
+  <img class="logo-img" src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778632619/Logo_yjs5ri.png" alt="Dragon Ball UAN"/>
+  <div class="tagline">✦ Universal Anthologies · Fan Manga ✦</div>
+  <nav>
+    <a href="#" data-section="inicio"   class="active">Inicio</a>
+    <a href="#" data-section="manga"           >Leer Manga</a>
+    <a href="#" data-section="novedades"       >Novedades</a>
+    <a href="#" data-section="faq"             >Preguntas Frecuentes</a>
+    <a href="#" data-section="contacto"        >Contacto</a>
+    <a href="#" data-section="creditos"        >Créditos</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- INICIO -->
+  <section id="inicio" class="section active">
+    <div class="hero-banner">
+      <img src="https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632788/Pagina_00_l6cyzi.png" alt="Dragon Ball UAN - Capítulo 1" style="width:100%;max-height:480px;object-fit:cover;object-position:top;display:block;opacity:0.9;"/>
+      <div class="hero-overlay">
+        <div class="hero-tag">🆕 Última publicación</div>
+        <div class="hero-title">Capítulo 1: Los Buenos y los Malos</div>
+        <div class="hero-desc">El primer capítulo de Dragon Ball UAN ya está disponible. Un nuevo universo que continúa la historia del manga original de Akira Toriyama.</div>
+        <a class="hero-btn" id="hero-read-btn">Leer ahora →</a>
+      </div>
+    </div>
+    <h2 class="section-title">⚡ Últimas Publicaciones</h2>
+    <div class="latest-grid">
+      <div class="post-card" data-goto="manga">
+        <div class="post-card-icon">📖</div>
+        <div class="post-card-body">
+          <div class="post-tag">📖 Nuevo capítulo</div>
+          <h3>Capítulo 1: Los Buenos y los Malos</h3>
+          <p>Tras la derrota de Majin Boo, una nueva amenaza comienza a tomar forma en las sombras del Otro Mundo.</p>
+          <div class="post-date">Mayo 2025</div>
+        </div>
+      </div>
+      <div class="post-card" data-goto="novedades">
+        <div class="post-card-icon">🌌</div>
+        <div class="post-card-body">
+          <div class="post-tag">📢 Proyecto</div>
+          <h3>¡Dragon Ball UAN está en línea!</h3>
+          <p>El blog oficial de Dragon Ball UAN ya está activo. Seguí las novedades desde acá.</p>
+          <div class="post-date">Mayo 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEER MANGA -->
+  <section id="manga" class="section">
+    <h2 class="section-title">📖 Leer Manga</h2>
+    <div class="chapter-entry">
+      <div class="chapter-header" id="ch1-header">
+        <div class="chapter-info">
+          <span class="chapter-num">CAP. 01</span>
+          <div class="chapter-meta">
+            <h3>Los Buenos y los Malos</h3>
+            <span>43 páginas · Mayo 2025</span>
+          </div>
+        </div>
+        <button class="btn-read" id="ch1-btn">LEER ▾</button>
+      </div>
+      <div class="manga-pages" id="pages-1">
+        <div id="page-display-1" style="text-align:center;"></div>
+        <div class="manga-nav">
+          <button id="prev-1">◀ ANTERIOR</button>
+          <span class="page-counter" id="counter-1">01 / 42</span>
+          <button id="next-1">SIGUIENTE ▶</button>
+        </div>
+        <div class="rating-box">
+          <h4>⭐ ¿QUÉ TE PARECIÓ ESTE CAPÍTULO?</h4>
+          <div class="stars" id="stars-1">
+            <span class="star" data-val="1">★</span>
+            <span class="star" data-val="2">★</span>
+            <span class="star" data-val="3">★</span>
+            <span class="star" data-val="4">★</span>
+            <span class="star" data-val="5">★</span>
+          </div>
+          <div class="rating-result" id="rating-result-1"></div>
+          <button class="btn-rate" id="btn-rate-1" disabled="disabled">Votar</button>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.82rem;color:var(--muted);text-align:center;margin-top:16px;">
+      Próximos capítulos en camino · Un capítulo por mes
+    </p>
+  </section>
+
+  <!-- NOVEDADES -->
+  <section id="novedades" class="section">
+    <h2 class="section-title">📢 Novedades</h2>
+    <div class="news-item">
+      <h3>¡Capítulo 1 disponible: "Los Buenos y los Malos"!</h3>
+      <p>El primer capítulo de Dragon Ball UAN ya está publicado. La historia comienza justo después del final del manga original, explorando qué ocurre con los personajes y las fuerzas del más allá. Podés leerlo completo en la sección "Leer Manga".</p>
+      <div class="news-date">Mayo 2025</div>
+    </div>
+    <div class="news-item">
+      <h3>Bienvenidos a Dragon Ball UAN</h3>
+      <p>Este es el blog oficial de Dragon Ball UAN (Universal Anthologies), el fan manga creado por Quadralien. La historia toma como único canon el manga original de Akira Toriyama. Sin relleno de anime, sin Super, sin GT: solo el manga.</p>
+      <div class="news-date">Mayo 2025</div>
+    </div>
+    <div class="community-box">
+      <h3>💬 Tablón de la Comunidad</h3>
+      <input type="text" id="msg-author" placeholder="Tu nombre o apodo"/>
+      <textarea id="msg-text" placeholder="Dejá tu comentario u opinión sobre Dragon Ball UAN..."></textarea>
+      <button class="btn-send" id="send-btn">Publicar Mensaje</button>
+      <div class="community-messages" id="community-messages"></div>
+    </div>
+  </section>
+
+
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <h2 class="section-title">❓ Preguntas Frecuentes</h2>
+    <div id="faq-list"></div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="section">
+    <h2 class="section-title">✉ Contacto</h2>
+    <p style="color:var(--muted);margin-bottom:24px;font-size:0.92rem;line-height:1.7;max-width:520px;">
+      Para consultas, sugerencias o simplemente charlar sobre Dragon Ball UAN, encontrás a Quadralien en:
+    </p>
+    <div class="contact-links">
+      <a class="contact-link" href="https://www.youtube.com/@Quadralien_pibe" target="_blank">
+        <span class="contact-link-icon">▶</span>
+        <div class="contact-link-info"><strong>YouTube</strong><span>@Quadralien_pibe</span></div>
+        <span style="color:var(--muted);font-size:0.8rem;">↗</span>
+      </a>
+      <a class="contact-link" href="https://www.instagram.com/quadralien_pibe/" target="_blank">
+        <span class="contact-link-icon">📸</span>
+        <div class="contact-link-info"><strong>Instagram</strong><span>@quadralien_pibe</span></div>
+        <span style="color:var(--muted);font-size:0.8rem;">↗</span>
+      </a>
+      <a class="contact-link" href="https://x.com/quadralien_pibe" target="_blank">
+        <span class="contact-link-icon">𝕏</span>
+        <div class="contact-link-info"><strong>X / Twitter</strong><span>@quadralien_pibe</span></div>
+        <span style="color:var(--muted);font-size:0.8rem;">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CREDITOS -->
+  <section id="creditos" class="section">
+    <h2 class="section-title">🌟 Créditos</h2>
+    <div class="credits-wrap">
+      <img class="credits-logo-img" src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778632619/Logo_yjs5ri.png" alt="Dragon Ball UAN"/>
+      <p class="credits-desc">
+        Dragon Ball UAN (Universal Anthologies) es un fan manga que continúa la historia del manga original de Dragon Ball escrito por Akira Toriyama. La obra no pretende reemplazar ni superar otros materiales, sino explorar un camino alternativo que respete el material original y le rinda homenaje.
+      </p>
+      <div class="credits-list">
+        <div class="credits-item">
+          <strong>Quadralien</strong>
+          <span>Guión, dirección, arte y producción general de Dragon Ball UAN</span>
+        </div>
+        <div class="credits-item">
+          <strong>Akira Toriyama</strong>
+          <span>Creador original de Dragon Ball · Esta obra es un homenaje a su legado</span>
+        </div>
+        <div class="credits-item">
+          <strong>Toyotaro</strong>
+          <span>Por sus contribuciones e inspiración dentro de la franquicia</span>
+        </div>
+        <div class="credits-item">
+          <strong>Vebills (DeviantArt)</strong>
+          <span>Su arte inspiró el diseño del personaje Citara</span>
+        </div>
+      </div>
+      <div class="disclaimer">
+        <strong style="color:var(--muted);">Aviso Legal:</strong><br/>
+        Dragon Ball y todos sus personajes son propiedad de Akira Toriyama y Shueisha. Dragon Ball UAN es una obra de fans sin fines comerciales, creada para rendir homenaje al manga original.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Dragon Ball UAN &#160;·&#160; Fan Manga por <span>Quadralien</span> &#160;·&#160; Dragon Ball © Akira Toriyama / Shueisha
+</footer>
+<script type='text/javascript'>//<![CDATA[
+// ===== NAVEGACIÓN (sin onclick inline — event listeners limpios) =====
+document.querySelectorAll('nav a').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    var target = this.getAttribute('data-section');
+    goToSection(target);
+  });
+});
+
+function goToSection(id) {
+  document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('nav a').forEach(function(a){ a.classList.remove('active'); });
+  var sec = document.getElementById(id);
+  if (sec) sec.classList.add('active');
+  var link = document.querySelector('nav a[data-section="' + id + '"]');
+  if (link) link.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Post cards navigation
+document.querySelectorAll('.post-card[data-goto]').forEach(function(card) {
+  card.addEventListener('click', function() {
+    goToSection(this.getAttribute('data-goto'));
+  });
+});
+
+// Hero button
+document.getElementById('hero-read-btn').addEventListener('click', function() {
+  goToSection('manga');
+  setTimeout(function(){ openChapter(1); }, 300);
+});
+
+// ===== MANGA VIEWER =====
+var currentPage = {};
+
+document.getElementById('ch1-header').addEventListener('click', function() {
+  openChapter(1);
+});
+
+function openChapter(num) {
+  var pages = document.getElementById('pages-' + num);
+  var isOpen = pages.classList.contains('open');
+  if (isOpen) {
+    pages.classList.remove('open');
+    document.getElementById('ch' + num + '-btn').textContent = 'LEER ▾';
+  } else {
+    pages.classList.add('open');
+    document.getElementById('ch' + num + '-btn').textContent = 'CERRAR ▴';
+    if (!currentPage[num]) currentPage[num] = 1;
+    renderPage(num, currentPage[num]);
+  }
+}
+
+// Chapter 1 pages: replace these URLs with your actual hosted images
+// Format: array index 0 = page 1, index 1 = page 2, etc.
+var pageUrls = {
+  1: [
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632788/Pagina_00_l6cyzi.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632789/Pagina_01_tsawuu.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632789/Pagina_02_r8ie4l.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632793/Pagina_03_gnu3ol.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632804/Pagina_04_aez5nj.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632806/Pagina_05_dc0hq2.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632806/Pagina_06_ne5rdn.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632805/Pagina_07_oyft1c.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632802/Pagina_08_keatuu.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632805/Pagina_09_r2rs1o.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632817/pagina_10_yh8e5l.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632808/pagina_11_gukvgv.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632811/pagina_12_l8pqno.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632815/pagina_13_ovgr1r.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632820/pagina_14_ymsspk.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632817/pagina_15_paezhr.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632813/pagina_16_b1rkec.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632816/pagina_17_nzavqj.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632818/pagina_18_doymsf.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632822/pagina_19_vbqeiw.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632821/pagina_20_pdmopx.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632822/pagina_21_j6dzo7.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632827/pagina_22_j424l2.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632821/pagina_23_etwew9.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632825/pagina_24_irvzi5.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632827/pagina_25_nopkqy.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632829/pagina_26_fee4xk.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632828/pagina_27_w6gjtz.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632835/pagina_28_xzcob0.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632831/pagina_29_bz6ibk.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632834/pagina_30_oxxkvb.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632836/pagina_31_hxoats.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632835/pagina_32_q3xe8d.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632838/pagina_33_v80i4d.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632839/pagina_34_lfyww5.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632839/pagina_35_u550ek.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632843/pagina_36_ucixht.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632847/pagina_37_k2syqy.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632845/pagina_38_asjimf.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632848/pagina_39_pavzf1.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632845/pagina_40_faizhs.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632846/pagina_41_xupnev.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632845/pagina_42_cx38c2.png"
+  ]
+};
+
+// Preload cache
+var imageCache = {};
+
+function preloadPage(chNum, pageNum) {
+  var urls = pageUrls[chNum];
+  if (!urls || pageNum < 1 || pageNum > urls.length) return;
+  var src = urls[pageNum - 1];
+  if (!src || imageCache[src]) return;
+  var img = new Image();
+  img.src = src;
+  imageCache[src] = img;
+}
+
+function renderPage(chNum, pageNum) {
+  currentPage[chNum] = pageNum;
+  var total = 43;
+  var urls = pageUrls[chNum];
+  var display = document.getElementById('page-display-' + chNum);
+  var counter = document.getElementById('counter-' + chNum);
+  var prev = document.getElementById('prev-' + chNum);
+  var next = document.getElementById('next-' + chNum);
+
+  counter.textContent = String(pageNum).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+  prev.disabled = pageNum <= 1;
+  next.disabled = pageNum >= total;
+
+  var src = urls && urls[pageNum - 1] ? urls[pageNum - 1] : null;
+  if (!src) return;
+
+  // Show loading spinner if not cached yet
+  if (!imageCache[src]) {
+    display.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:center;height:300px;">' +
+        '<div style="text-align:center;">' +
+          '<div style="font-size:2rem;animation:spin 1s linear infinite;display:inline-block;">⚡</div>' +
+          '<p style="color:#8890aa;margin-top:12px;font-family:Bangers,cursive;letter-spacing:2px;">CARGANDO...</p>' +
+        '</div>' +
+      '</div>';
+  }
+
+  // Load image (from cache or fresh)
+  var img = imageCache[src] || new Image();
+  imageCache[src] = img;
+
+  if (img.complete) {
+    display.innerHTML = '';
+    img.style.cssText = 'width:100%;max-width:760px;display:block;margin:0 auto;border-radius:3px;';
+    display.appendChild(img.cloneNode());
+    display.querySelector('img').src = src;
+  } else {
+    img.onload = function() {
+      if (currentPage[chNum] === pageNum) {
+        display.innerHTML = '';
+        var el = new Image();
+        el.src = src;
+        el.style.cssText = 'width:100%;max-width:760px;display:block;margin:0 auto;border-radius:3px;';
+        display.appendChild(el);
+      }
+    };
+    img.src = src;
+  }
+
+  // Preload next 3 and previous 1
+  preloadPage(chNum, pageNum + 1);
+  preloadPage(chNum, pageNum + 2);
+  preloadPage(chNum, pageNum + 3);
+  preloadPage(chNum, pageNum - 1);
+}
+
+// Preload first 5 pages on chapter open
+function preloadInitial(chNum) {
+  for (var i = 1; i <= 5; i++) preloadPage(chNum, i);
+}
+
+document.getElementById('prev-1').addEventListener('click', function() {
+  var p = (currentPage[1] || 1) - 1;
+  if (p >= 1) renderPage(1, p);
+});
+document.getElementById('next-1').addEventListener('click', function() {
+  var p = (currentPage[1] || 1) + 1;
+  if (p <= 43) renderPage(1, p);
+});
+
+// ===== FAQ =====
+var faqData = [
+  {q:"¿Qué es Dragon Ball UAN?", a:"Dragon Ball UAN (Universal Anthologies) es un fan manga que continúa la historia del manga original de Dragon Ball escrito por Akira Toriyama."},
+  {q:"¿Qué materiales son considerados canon dentro de esta obra?", a:"La historia toma únicamente como base el manga original de Dragon Ball. No se tendrán en cuenta elementos del relleno de los animes, películas, guías, entrevistas ni mangas complementarios."},
+  {q:"¿Dragon Ball Super y Dragon Ball GT forman parte de esta continuidad?", a:"No. Los eventos de Dragon Ball Super y Dragon Ball GT no forman parte de la continuidad de Dragon Ball UAN."},
+  {q:"¿La obra intenta reemplazar otros materiales oficiales o fan works?", a:"No. Dragon Ball UAN no pretende reemplazar ni superar otras obras, sino explorar un camino alternativo que respete el material original y le rinda homenaje."},
+  {q:"¿Habrá referencias a otros materiales de Dragon Ball?", a:"Sí. Habrá referencias, homenajes e inspiraciones tomadas de distintos materiales relacionados con Dragon Ball y otras obras de Akira Toriyama."},
+  {q:"¿Habrá referencias a trabajos de fans?", a:"Sí. La obra incluirá homenajes e inspiraciones tomadas de diseños e ideas de fans. Siempre que sea posible, se darán los créditos correspondientes."},
+  {q:"¿Se utiliza inteligencia artificial en el proyecto?", a:"Sí. Hay una gran cantidad de IA involucrada en la producción del manga. Sin embargo, también hay mucho trabajo manual para corregir, redibujar y pulir las inconsistencias de la IA."},
+  {q:"¿Cada cuánto tiempo saldrán nuevos capítulos?", a:"La intención es publicar un capítulo por mes, siempre que las posibilidades y el tiempo disponible lo permitan."},
+  {q:"¿Cuántas páginas tendrá cada capítulo?", a:"La cantidad de páginas puede variar según las necesidades de cada entrega y el tiempo de producción."},
+  {q:"¿Dónde se publicarán los nuevos capítulos?", a:"Los capítulos serán publicados a través del blog oficial de Dragon Ball UAN y sus redes asociadas."},
+  {q:"¿El proyecto tiene fines comerciales?", a:"No. Dragon Ball UAN es un proyecto realizado por fans y sin fines comerciales."},
+  {q:"¿Quién es el autor original de Dragon Ball?", a:"Dragon Ball fue creado por Akira Toriyama, a quien esta obra busca homenajear y respetar constantemente."}
+];
+
+var faqList = document.getElementById('faq-list');
+faqData.forEach(function(f, i) {
+  var div = document.createElement('div');
+  div.className = 'faq-item';
+  div.id = 'faq-' + i;
+  div.innerHTML =
+    '<div class="faq-question"><span>' + f.q + '</span><span class="faq-icon">+</span></div>' +
+    '<div class="faq-answer">' + f.a + '</div>';
+  div.querySelector('.faq-question').addEventListener('click', function() {
+    div.classList.toggle('open');
+  });
+  faqList.appendChild(div);
+});
+
+// ===== MENSAJES =====
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderMsgs() {
+  var stored = [];
+  try { stored = JSON.parse(localStorage.getItem('dbu_msgs') || '[]'); } catch(e){}
+  var all = stored.length ? stored : [{author:'¡Comunidad DBU!', text:'Dejá tu opinión sobre el capítulo 1 acá abajo.'}];
+  var html = all.map(function(m) {
+    return '<div class="community-msg"><div class="msg-author">' + escHtml(m.author) + '</div><div class="msg-text">' + escHtml(m.text) + '</div></div>';
+  }).join('');
+  document.getElementById('community-messages').innerHTML = html;
+}
+
+document.getElementById('send-btn').addEventListener('click', function() {
+  var author = document.getElementById('msg-author').value.trim() || 'Anónimo';
+  var text = document.getElementById('msg-text').value.trim();
+  if (!text) return;
+  var stored = [];
+  try { stored = JSON.parse(localStorage.getItem('dbu_msgs') || '[]'); } catch(e){}
+  stored.unshift({author:author, text:text});
+  try { localStorage.setItem('dbu_msgs', JSON.stringify(stored.slice(0,50))); } catch(e){}
+  document.getElementById('msg-author').value = '';
+  document.getElementById('msg-text').value = '';
+  renderMsgs();
+});
+
+renderMsgs();
+
+// ===== RATING =====
+function initRating(chNum) {
+  var selectedVal = 0;
+  var stars = document.querySelectorAll('#stars-' + chNum + ' .star');
+  var btn = document.getElementById('btn-rate-' + chNum);
+  var result = document.getElementById('rating-result-' + chNum);
+
+  // Load existing votes from localStorage
+  function getVotes() {
+    try { return JSON.parse(localStorage.getItem('dbu_votes_ch' + chNum) || '[]'); } catch(e) { return []; }
+  }
+
+  function showResult() {
+    var votes = getVotes();
+    if (votes.length === 0) {
+      result.innerHTML = 'Sé el primero en votar.';
+      return;
+    }
+    var avg = votes.reduce(function(a,b){return a+b;},0) / votes.length;
+    var avgStr = votes.length >= 3 ? avg.toFixed(1) : avg.toFixed(0);
+    result.innerHTML = '<strong>' + avgStr + ' / 5</strong> &nbsp;·&nbsp; ' + votes.length + (votes.length === 1 ? ' voto' : ' votos');
+  }
+
+  // Check if already voted
+  var alreadyVoted = localStorage.getItem('dbu_voted_ch' + chNum);
+  if (alreadyVoted) {
+    btn.textContent = '¡Ya votaste!';
+    btn.disabled = true;
+    stars.forEach(function(s) {
+      if (parseInt(s.getAttribute('data-val')) <= parseInt(alreadyVoted)) {
+        s.classList.add('selected');
+      }
+      s.style.cursor = 'default';
+    });
+    showResult();
+    return;
+  }
+
+  // Hover effects
+  stars.forEach(function(star) {
+    star.addEventListener('mouseenter', function() {
+      var val = parseInt(this.getAttribute('data-val'));
+      stars.forEach(function(s) {
+        s.classList.toggle('hovered', parseInt(s.getAttribute('data-val')) <= val);
+      });
+    });
+    star.addEventListener('mouseleave', function() {
+      stars.forEach(function(s) { s.classList.remove('hovered'); });
+    });
+    star.addEventListener('click', function() {
+      selectedVal = parseInt(this.getAttribute('data-val'));
+      stars.forEach(function(s) {
+        s.classList.toggle('selected', parseInt(s.getAttribute('data-val')) <= selectedVal);
+      });
+      btn.disabled = false;
+      showResult();
+    });
+  });
+
+  btn.addEventListener('click', function() {
+    if (!selectedVal) return;
+    var votes = getVotes();
+    votes.push(selectedVal);
+    try { localStorage.setItem('dbu_votes_ch' + chNum, JSON.stringify(votes)); } catch(e){}
+    localStorage.setItem('dbu_voted_ch' + chNum, selectedVal);
+    btn.textContent = '¡Gracias por votar!';
+    btn.disabled = true;
+    stars.forEach(function(s) { s.style.cursor = 'default'; });
+    showResult();
+  });
+
+  showResult();
+}
+
+initRating(1);
+//]]></script>
+</b:includable>
+</b:widget>
+</b:section>
+</body>
+</html>
