@@ -300,6 +300,7 @@
 
     /* RATING */
     .rating-box {
+      pointer-events: auto !important;
       max-width: 760px; margin: 28px auto 0;
       background: var(--dark2);
       border: 1px solid rgba(30,58,138,0.3);
@@ -315,12 +316,18 @@
     .stars {
       display: flex; justify-content: center;
       gap: 8px; margin-bottom: 14px;
+      pointer-events: auto !important;
+      position: relative;
+      z-index: 10;
     }
     .star {
-      font-size: 2.2rem; cursor: pointer;
+      font-size: 2.2rem; cursor: pointer !important;
       color: #333;
       transition: color 0.15s, transform 0.15s;
       user-select: none;
+      pointer-events: auto !important;
+      position: relative;
+      z-index: 10;
     }
     .star:hover, .star.hovered, .star.selected { color: var(--yellow); transform: scale(1.15); }
     .rating-result {
