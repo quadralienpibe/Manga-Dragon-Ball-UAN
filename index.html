@@ -240,21 +240,6 @@
     .news-item h3 { font-size:1.05rem; color:var(--yellow); margin-bottom:6px; font-weight:700; }
     .news-item p { font-size:0.88rem; color:var(--muted); line-height:1.65; }
     .news-date { font-size:0.73rem; color:#44475a; margin-top:10px; }
-
-    .community-box {
-      background:var(--dark2); border:1px solid rgba(30,58,138,0.3);
-      border-radius:10px; padding:24px; margin-top:32px;
-    }
-    .community-box h3 { font-family:'Bangers',cursive; font-size:1.4rem; letter-spacing:2px; color:var(--blue-light); margin-bottom:16px; }
-    .community-box input, .community-box textarea {
-      width:100%; background:var(--dark3);
-      border:1px solid rgba(30,58,138,0.3); border-radius:var(--radius);
-      color:var(--text); font-family:'Noto Sans JP',sans-serif;
-      font-size:0.88rem; padding:10px 14px; outline:none;
-      margin-bottom:10px; transition:border-color 0.2s;
-    }
-    .community-box input:focus, .community-box textarea:focus { border-color:var(--blue-light); }
-    .community-box textarea { resize:vertical; min-height:80px; }
     .btn-send {
       background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 100%);
       color:var(--yellow); font-family:'Bangers',cursive;
@@ -264,9 +249,6 @@
     }
     .btn-send:hover { background:linear-gradient(135deg,var(--blue-light) 0%,var(--yellow) 100%); color:var(--dark); }
     .community-messages { margin-top:20px; display:flex; flex-direction:column; gap:10px; }
-    .community-msg { background:var(--dark3); border-radius:var(--radius); padding:12px 16px; border-left:2px solid rgba(59,130,246,0.4); }
-    .community-msg .msg-author { font-size:0.78rem; font-weight:700; color:var(--blue-light); margin-bottom:4px; }
-    .community-msg .msg-text { font-size:0.88rem; color:var(--muted); }
 
     /* FAQ */
     .faq-item { background:var(--dark2); border:1px solid rgba(30,58,138,0.2); border-radius:var(--radius); overflow:hidden; margin-bottom:10px; }
@@ -358,7 +340,7 @@
 <body>
 
 <header>
-  <img class="logo-img" src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778632619/Logo_yjs5ri.png" alt="Dragon Ball UAN"/>
+  <a href="#" id="logo-link"><img class="logo-img" src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778632619/Logo_yjs5ri.png" alt="Dragon Ball UAN"/></a>
   <div class="tagline">✦ Universal Anthologies · Fan Manga ✦</div>
   <nav>
     <a href="#" data-section="inicio"   class="active">Inicio</a>
@@ -469,13 +451,7 @@
       <p>Este es el blog oficial de Dragon Ball UAN (Universal Anthologies), el fan manga creado por Quadralien. La historia toma como único canon el manga original de Akira Toriyama. Sin relleno de anime, sin Super, sin GT: solo el manga.</p>
       <div class="news-date">Mayo 2025</div>
     </div>
-    <div class="community-box">
-      <h3>💬 Tablón de la Comunidad</h3>
-      <input type="text" id="msg-author" placeholder="Tu nombre o apodo"/>
-      <textarea id="msg-text" placeholder="Dejá tu comentario u opinión sobre Dragon Ball UAN..."></textarea>
-      <button class="btn-send" id="send-btn">Publicar Mensaje</button>
-      <div class="community-messages" id="community-messages"></div>
-    </div>
+    
   </section>
 
 
@@ -521,10 +497,6 @@
       </p>
       <div class="credits-list">
         <div class="credits-item">
-          <strong>Quadralien</strong>
-          <span>Guión, dirección, arte y producción general de Dragon Ball UAN</span>
-        </div>
-        <div class="credits-item">
           <strong>Akira Toriyama</strong>
           <span>Creador original de Dragon Ball · Esta obra es un homenaje a su legado</span>
         </div>
@@ -569,6 +541,12 @@ function goToSection(id) {
   if (link) link.classList.add('active');
   window.scrollTo({top:0, behavior:'smooth'});
 }
+
+// Logo click -> inicio
+document.getElementById('logo-link').addEventListener('click', function(e) {
+  e.preventDefault();
+  goToSection('inicio');
+});
 
 // Post cards navigation
 document.querySelectorAll('.post-card[data-goto]').forEach(function(card) {
@@ -767,32 +745,6 @@ faqData.forEach(function(f, i) {
   faqList.appendChild(div);
 });
 
-// ===== MENSAJES =====
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function renderMsgs() {
-  var stored = [];
-  try { stored = JSON.parse(localStorage.getItem('dbu_msgs') || '[]'); } catch(e){}
-  var all = stored.length ? stored : [{author:'¡Comunidad DBU!', text:'Dejá tu opinión sobre el capítulo 1 acá abajo.'}];
-  var html = all.map(function(m) {
-    return '<div class="community-msg"><div class="msg-author">' + escHtml(m.author) + '</div><div class="msg-text">' + escHtml(m.text) + '</div></div>';
-  }).join('');
-  document.getElementById('community-messages').innerHTML = html;
-}
-
-document.getElementById('send-btn').addEventListener('click', function() {
-  var author = document.getElementById('msg-author').value.trim() || 'Anónimo';
-  var text = document.getElementById('msg-text').value.trim();
-  if (!text) return;
-  var stored = [];
-  try { stored = JSON.parse(localStorage.getItem('dbu_msgs') || '[]'); } catch(e){}
-  stored.unshift({author:author, text:text});
-  try { localStorage.setItem('dbu_msgs', JSON.stringify(stored.slice(0,50))); } catch(e){}
-  document.getElementById('msg-author').value = '';
-  document.getElementById('msg-text').value = '';
-  renderMsgs();
 });
 
 renderMsgs();
@@ -817,7 +769,7 @@ function initRating(chNum) {
     }
     var avg = votes.reduce(function(a,b){return a+b;},0) / votes.length;
     var avgStr = votes.length >= 3 ? avg.toFixed(1) : avg.toFixed(0);
-    result.innerHTML = '<strong>' + avgStr + ' / 5</strong> &nbsp;·&nbsp; ' + votes.length + (votes.length === 1 ? ' voto' : ' votos');
+    result.innerHTML = '<strong>' + avgStr + ' / 5</strong> &#160;·&#160; ' + votes.length + (votes.length === 1 ? ' voto' : ' votos');
   }
 
   // Check if already voted
