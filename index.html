@@ -357,7 +357,7 @@
   <!-- INICIO -->
   <section id="inicio" class="section active">
     <div class="hero-banner">
-      <img src="https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632788/Pagina_00_l6cyzi.png" alt="Dragon Ball UAN - Capítulo 1" style="width:100%;max-height:480px;object-fit:cover;object-position:top;display:block;opacity:0.9;">
+      <img src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778681941/Portada_ydpnek.png" alt="Dragon Ball UAN - Capítulo 1" style="width:100%;max-height:480px;object-fit:cover;object-position:top;display:block;opacity:0.9;">
       <div class="hero-overlay">
         <div class="hero-tag">🆕 Última publicación</div>
         <div class="hero-title">Capítulo 1: Los Buenos y los Malos</div>
@@ -523,15 +523,7 @@
 </footer>
 
 <script>
-// ===== NAVEGACIÓN (sin onclick inline — event listeners limpios) =====
-document.querySelectorAll('nav a').forEach(function(link) {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    var target = this.getAttribute('data-section');
-    goToSection(target);
-  });
-});
-
+// ===== NAVEGACIÓN =====
 function goToSection(id) {
   document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
   document.querySelectorAll('nav a').forEach(function(a){ a.classList.remove('active'); });
@@ -542,20 +534,24 @@ function goToSection(id) {
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-// Logo click -> inicio
+document.querySelectorAll('nav a').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    goToSection(this.getAttribute('data-section'));
+  });
+});
+
 document.getElementById('logo-link').addEventListener('click', function(e) {
   e.preventDefault();
   goToSection('inicio');
 });
 
-// Post cards navigation
 document.querySelectorAll('.post-card[data-goto]').forEach(function(card) {
   card.addEventListener('click', function() {
     goToSection(this.getAttribute('data-goto'));
   });
 });
 
-// Hero button
 document.getElementById('hero-read-btn').addEventListener('click', function() {
   goToSection('manga');
   setTimeout(function(){ openChapter(1); }, 300);
@@ -578,15 +574,15 @@ function openChapter(num) {
     pages.classList.add('open');
     document.getElementById('ch' + num + '-btn').textContent = 'CERRAR ▴';
     if (!currentPage[num]) currentPage[num] = 1;
+    preloadInitial(num);
     renderPage(num, currentPage[num]);
+    initSwipe(num);
   }
 }
 
-// Chapter 1 pages: replace these URLs with your actual hosted images
-// Format: array index 0 = page 1, index 1 = page 2, etc.
 var pageUrls = {
   1: [
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632788/Pagina_00_l6cyzi.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778681661/Pagina_00_gpqdk7.png",
     "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632789/Pagina_01_tsawuu.png",
     "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632789/Pagina_02_r8ie4l.png",
     "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632793/Pagina_03_gnu3ol.png",
@@ -621,18 +617,17 @@ var pageUrls = {
     "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632835/pagina_32_q3xe8d.png",
     "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632838/pagina_33_v80i4d.png",
     "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632839/pagina_34_lfyww5.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632839/pagina_35_u550ek.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778681558/pagina_35_ep79hf.png",
     "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632843/pagina_36_ucixht.png",
     "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632847/pagina_37_k2syqy.png",
     "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632845/pagina_38_asjimf.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632848/pagina_39_pavzf1.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632845/pagina_40_faizhs.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632846/pagina_41_xupnev.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778681569/pagina_39_solwph.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778681590/pagina_40_i3tdit.png",
+    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778681602/pagina_41_qahbbd.png",
     "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632845/pagina_42_cx38c2.png"
   ]
 };
 
-// Preload cache
 var imageCache = {};
 
 function preloadPage(chNum, pageNum) {
@@ -643,6 +638,10 @@ function preloadPage(chNum, pageNum) {
   var img = new Image();
   img.src = src;
   imageCache[src] = img;
+}
+
+function preloadInitial(chNum) {
+  for (var i = 1; i <= 5; i++) preloadPage(chNum, i);
 }
 
 function renderPage(chNum, pageNum) {
@@ -658,29 +657,22 @@ function renderPage(chNum, pageNum) {
   prev.disabled = pageNum <= 1;
   next.disabled = pageNum >= total;
 
-  var src = urls && urls[pageNum - 1] ? urls[pageNum - 1] : null;
+  var src = urls[pageNum - 1];
   if (!src) return;
 
-  // Show loading spinner if not cached yet
   if (!imageCache[src]) {
-    display.innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:center;height:300px;">' +
-        '<div style="text-align:center;">' +
-          '<div style="font-size:2rem;animation:spin 1s linear infinite;display:inline-block;">⚡</div>' +
-          '<p style="color:#8890aa;margin-top:12px;font-family:Bangers,cursive;letter-spacing:2px;">CARGANDO...</p>' +
-        '</div>' +
-      '</div>';
+    display.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:300px;"><div style="text-align:center;"><div style="font-size:2rem;animation:spin 1s linear infinite;display:inline-block;">⚡</div><p style="color:#8890aa;margin-top:12px;font-family:Bangers,cursive;letter-spacing:2px;">CARGANDO...</p></div></div>';
   }
 
-  // Load image (from cache or fresh)
   var img = imageCache[src] || new Image();
   imageCache[src] = img;
 
-  if (img.complete) {
+  if (img.complete && img.naturalWidth > 0) {
     display.innerHTML = '';
-    img.style.cssText = 'width:100%;max-width:760px;display:block;margin:0 auto;border-radius:3px;';
-    display.appendChild(img.cloneNode());
-    display.querySelector('img').src = src;
+    var el = new Image();
+    el.src = src;
+    el.style.cssText = 'width:100%;max-width:760px;display:block;margin:0 auto;border-radius:3px;';
+    display.appendChild(el);
   } else {
     img.onload = function() {
       if (currentPage[chNum] === pageNum) {
@@ -694,16 +686,10 @@ function renderPage(chNum, pageNum) {
     img.src = src;
   }
 
-  // Preload next 3 and previous 1
   preloadPage(chNum, pageNum + 1);
   preloadPage(chNum, pageNum + 2);
   preloadPage(chNum, pageNum + 3);
   preloadPage(chNum, pageNum - 1);
-}
-
-// Preload first 5 pages on chapter open
-function preloadInitial(chNum) {
-  for (var i = 1; i <= 5; i++) preloadPage(chNum, i);
 }
 
 document.getElementById('prev-1').addEventListener('click', function() {
@@ -714,6 +700,27 @@ document.getElementById('next-1').addEventListener('click', function() {
   var p = (currentPage[1] || 1) + 1;
   if (p <= 43) renderPage(1, p);
 });
+
+// ===== SWIPE MÓVIL =====
+function initSwipe(chNum) {
+  var el = document.getElementById('pages-' + chNum);
+  var startX = 0;
+  el.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+  }, {passive: true});
+  el.addEventListener('touchend', function(e) {
+    var diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        var p = (currentPage[chNum] || 1) + 1;
+        if (p <= 43) renderPage(chNum, p);
+      } else {
+        var p = (currentPage[chNum] || 1) - 1;
+        if (p >= 1) renderPage(chNum, p);
+      }
+    }
+  }, {passive: true});
+}
 
 // ===== FAQ =====
 var faqData = [
@@ -745,10 +752,6 @@ faqData.forEach(function(f, i) {
   faqList.appendChild(div);
 });
 
-});
-
-renderMsgs();
-
 // ===== RATING =====
 function initRating(chNum) {
   var selectedVal = 0;
@@ -756,53 +759,41 @@ function initRating(chNum) {
   var btn = document.getElementById('btn-rate-' + chNum);
   var result = document.getElementById('rating-result-' + chNum);
 
-  // Load existing votes from localStorage
   function getVotes() {
     try { return JSON.parse(localStorage.getItem('dbu_votes_ch' + chNum) || '[]'); } catch(e) { return []; }
   }
 
   function showResult() {
     var votes = getVotes();
-    if (votes.length === 0) {
-      result.innerHTML = 'Sé el primero en votar.';
-      return;
-    }
+    if (votes.length === 0) { result.innerHTML = 'Sé el primero en votar.'; return; }
     var avg = votes.reduce(function(a,b){return a+b;},0) / votes.length;
     var avgStr = votes.length >= 3 ? avg.toFixed(1) : avg.toFixed(0);
-    result.innerHTML = '<strong>' + avgStr + ' / 5</strong> &#160;·&#160; ' + votes.length + (votes.length === 1 ? ' voto' : ' votos');
+    result.innerHTML = '<strong>' + avgStr + ' / 5</strong> &#160;&#183;&#160; ' + votes.length + (votes.length === 1 ? ' voto' : ' votos');
   }
 
-  // Check if already voted
   var alreadyVoted = localStorage.getItem('dbu_voted_ch' + chNum);
   if (alreadyVoted) {
     btn.textContent = '¡Ya votaste!';
     btn.disabled = true;
     stars.forEach(function(s) {
-      if (parseInt(s.getAttribute('data-val')) <= parseInt(alreadyVoted)) {
-        s.classList.add('selected');
-      }
+      if (parseInt(s.getAttribute('data-val')) <= parseInt(alreadyVoted)) s.classList.add('selected');
       s.style.cursor = 'default';
     });
     showResult();
     return;
   }
 
-  // Hover effects
   stars.forEach(function(star) {
     star.addEventListener('mouseenter', function() {
       var val = parseInt(this.getAttribute('data-val'));
-      stars.forEach(function(s) {
-        s.classList.toggle('hovered', parseInt(s.getAttribute('data-val')) <= val);
-      });
+      stars.forEach(function(s) { s.classList.toggle('hovered', parseInt(s.getAttribute('data-val')) <= val); });
     });
     star.addEventListener('mouseleave', function() {
       stars.forEach(function(s) { s.classList.remove('hovered'); });
     });
     star.addEventListener('click', function() {
       selectedVal = parseInt(this.getAttribute('data-val'));
-      stars.forEach(function(s) {
-        s.classList.toggle('selected', parseInt(s.getAttribute('data-val')) <= selectedVal);
-      });
+      stars.forEach(function(s) { s.classList.toggle('selected', parseInt(s.getAttribute('data-val')) <= selectedVal); });
       btn.disabled = false;
       showResult();
     });
