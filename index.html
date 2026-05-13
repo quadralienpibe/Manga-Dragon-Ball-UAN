@@ -1,12 +1,12 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<html lang="es">
 <head>
-  <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
-  <title><data:blog.pageTitle/></title>
-  <link href='https://fonts.googleapis.com/css2?family=Bangers&amp;family=Noto+Sans+JP:wght@400;700&amp;display=swap' rel='stylesheet' type='text/css'/>
-  <b:skin><![CDATA[
-:root {
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dragon Ball UAN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
       --yellow: #facc15;
       --blue: #1e3a8a;
       --blue-light: #3b82f6;
@@ -353,13 +353,10 @@
       .chapter-header { flex-wrap:wrap; gap:10px; }
       nav a { font-size:0.8rem; padding:5px 9px; letter-spacing:1px; }
     }
-  ]]></b:skin>
+  </style>
 </head>
 <body>
-<b:section id='main' class='main' maxwidgets='99' showaddelement='no'>
-<b:widget id='HTML1' locked='true' title='' type='HTML'>
-<b:widget-settings/>
-<b:includable id='main'>
+
 <header>
   <img class="logo-img" src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778632619/Logo_yjs5ri.png" alt="Dragon Ball UAN"/>
   <div class="tagline">✦ Universal Anthologies · Fan Manga ✦</div>
@@ -378,7 +375,7 @@
   <!-- INICIO -->
   <section id="inicio" class="section active">
     <div class="hero-banner">
-      <img src="https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632788/Pagina_00_l6cyzi.png" alt="Dragon Ball UAN - Capítulo 1" style="width:100%;max-height:480px;object-fit:cover;object-position:top;display:block;opacity:0.9;"/>
+      <img src="https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632788/Pagina_00_l6cyzi.png" alt="Dragon Ball UAN - Capítulo 1" style="width:100%;max-height:480px;object-fit:cover;object-position:top;display:block;opacity:0.9;">
       <div class="hero-overlay">
         <div class="hero-tag">🆕 Última publicación</div>
         <div class="hero-title">Capítulo 1: Los Buenos y los Malos</div>
@@ -440,7 +437,7 @@
             <span class="star" data-val="5">★</span>
           </div>
           <div class="rating-result" id="rating-result-1"></div>
-          <button class="btn-rate" id="btn-rate-1" disabled="disabled">Votar</button>
+          <button class="btn-rate" id="btn-rate-1" disabled>Votar</button>
         </div>
       </div>
     </div>
@@ -540,9 +537,10 @@
 </main>
 
 <footer>
-  Dragon Ball UAN &#160;·&#160; Fan Manga por <span>Quadralien</span> &#160;·&#160; Dragon Ball © Akira Toriyama / Shueisha
+  Dragon Ball UAN &nbsp;·&nbsp; Fan Manga por <span>Quadralien</span> &nbsp;·&nbsp; Dragon Ball © Akira Toriyama / Shueisha
 </footer>
-<script type='text/javascript'>//<![CDATA[
+
+<script>
 // ===== NAVEGACIÓN (sin onclick inline — event listeners limpios) =====
 document.querySelectorAll('nav a').forEach(function(link) {
   link.addEventListener('click', function(e) {
@@ -864,9 +862,6 @@ function initRating(chNum) {
 }
 
 initRating(1);
-//]]></script>
-</b:includable>
-</b:widget>
-</b:section>
+</script>
 </body>
 </html>
