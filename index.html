@@ -509,6 +509,16 @@
           <div class="rating-result" id="rating-result-1"></div>
           <button class="btn-rate" id="btn-rate-1" disabled>Votar</button>
         </div>
+        <div class="comments-box">
+          <h4>💬 COMENTARIOS</h4>
+          <div class="comment-form">
+            <input type="text" id="comment-name-1" placeholder="Tu nombre (por defecto: Saiyajin Anonimo)" maxlength="30"/>
+            <textarea id="comment-text-1" placeholder="¿Qué te pareció el capítulo? (máx. 280 caracteres)" maxlength="280"></textarea>
+            <div class="comment-char-count" id="comment-count-1">0 / 280</div>
+            <button class="comment-submit" id="comment-submit-1">Comentar</button>
+          </div>
+          <div class="comments-list" id="comments-list-1"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -1098,6 +1108,10 @@ function initRating(chNum) {
     showResult();
   });
   showResult();
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 // ===== COMMENTS =====
