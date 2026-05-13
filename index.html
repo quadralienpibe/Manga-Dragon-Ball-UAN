@@ -4,6 +4,14 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dragon Ball UAN</title>
+  <meta name="description" content="Dragon Ball UAN (Universal Anthologies) es un fan manga que continúa la historia del manga original de Dragon Ball escrito por Akira Toriyama."/>
+  <meta name="keywords" content="Dragon Ball, fan manga, Dragon Ball UAN, Universal Anthologies, Akira Toriyama, manga online"/>
+  <meta property="og:title" content="Dragon Ball UAN"/>
+  <meta property="og:description" content="Fan manga que continúa la historia del manga original de Dragon Ball."/>
+  <meta property="og:image" content="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778686737/Portada_wbk7zb.png"/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778693217/icono_kmsrhi.png"/>
+  <link rel="apple-touch-icon" href="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778693217/icono_kmsrhi.png"/>
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -356,6 +364,49 @@
     @keyframes fadeHint { 0%{opacity:1} 70%{opacity:1} 100%{opacity:0} }
     .btn-fullscreen { background:rgba(30,58,138,0.4); border:1px solid rgba(59,130,246,0.4); color:var(--muted); font-size:0.8rem; padding:5px 12px; border-radius:4px; cursor:pointer; margin-left:8px; transition:all 0.2s; font-family:'Noto Sans JP',sans-serif; }
     .btn-fullscreen:hover { border-color:var(--yellow); color:var(--yellow); }
+    /* COMMENTS */
+    .comments-box {
+      max-width:760px; margin:24px auto 0;
+      background:var(--dark2);
+      border:1px solid rgba(30,58,138,0.3);
+      border-radius:10px; padding:24px;
+    }
+    .comments-box h4 {
+      font-family:'Bangers',cursive; font-size:1.3rem;
+      letter-spacing:2px; color:var(--blue-light);
+      margin-bottom:18px;
+    }
+    .comment-form { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+    .comment-form input, .comment-form textarea {
+      background:var(--dark3); border:1px solid rgba(30,58,138,0.3);
+      border-radius:var(--radius); color:var(--text);
+      font-family:'Noto Sans JP',sans-serif; font-size:0.88rem;
+      padding:10px 14px; outline:none; transition:border-color 0.2s;
+      width:100%;
+    }
+    .comment-form input:focus, .comment-form textarea:focus { border-color:var(--blue-light); }
+    .comment-form textarea { resize:none; height:70px; }
+    .comment-char-count { font-size:0.75rem; color:var(--muted); text-align:right; margin-top:-6px; }
+    .comment-char-count.over { color:#ef4444; }
+    .comment-submit {
+      background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 100%);
+      color:var(--yellow); font-family:'Bangers',cursive;
+      letter-spacing:2px; font-size:1rem;
+      border:1px solid rgba(250,204,21,0.2);
+      padding:9px 26px; border-radius:var(--radius);
+      cursor:pointer; transition:all 0.2s; align-self:flex-start;
+    }
+    .comment-submit:hover { background:linear-gradient(135deg,var(--blue-light) 0%,var(--yellow) 100%); color:var(--dark); }
+    .comments-list { display:flex; flex-direction:column; gap:10px; }
+    .comment-item {
+      background:var(--dark3); border-radius:var(--radius);
+      padding:12px 16px; border-left:2px solid rgba(59,130,246,0.4);
+      position:relative;
+    }
+    .comment-author { font-size:0.78rem; font-weight:700; color:var(--blue-light); margin-bottom:4px; }
+    .comment-text { font-size:0.88rem; color:var(--muted); line-height:1.5; word-break:break-word; }
+    .comment-date { font-size:0.7rem; color:#444; margin-top:6px; }
+    .no-comments { font-size:0.88rem; color:var(--muted); text-align:center; padding:16px 0; }
     @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
     @media(max-width:600px){
@@ -460,9 +511,6 @@
         </div>
       </div>
     </div>
-    <p style="font-size:0.82rem;color:var(--muted);text-align:center;margin-top:16px;">
-      Próximos capítulos en camino · Un capítulo por mes
-    </p>
   </section>
 
   <!-- NOVEDADES -->
@@ -633,6 +681,16 @@ document.getElementById('ch1-header').addEventListener('click', function() {
 
 document.getElementById('ch1-fs-btn').addEventListener('click', function(e) {
   e.stopPropagation();
+  // Make sure chapter is open first
+  var pages = document.getElementById('pages-1');
+  if (!pages.classList.contains('open')) {
+    pages.classList.add('open');
+    document.getElementById('ch1-btn').textContent = 'CERRAR ▴';
+    if (!currentPage[1]) currentPage[1] = 1;
+    preloadInitial(1);
+    renderPage(1, currentPage[1]);
+    initSwipe(1);
+  }
   openFullscreen(1);
 });
 
@@ -1042,6 +1100,84 @@ function initRating(chNum) {
   showResult();
 }
 
+// ===== COMMENTS =====
+function initComments(chNum) {
+  var nameInput = document.getElementById('comment-name-' + chNum);
+  var textInput = document.getElementById('comment-text-' + chNum);
+  var countEl   = document.getElementById('comment-count-' + chNum);
+  var submitBtn = document.getElementById('comment-submit-' + chNum);
+  var listEl    = document.getElementById('comments-list-' + chNum);
+
+  // Restore saved name
+  var savedName = localStorage.getItem('dbu_comment_name') || '';
+  nameInput.value = savedName;
+
+  // Char counter
+  textInput.addEventListener('input', function() {
+    var len = textInput.value.length;
+    countEl.textContent = len + ' / 280';
+    countEl.className = 'comment-char-count' + (len >= 280 ? ' over' : '');
+  });
+
+  // Save name on change
+  nameInput.addEventListener('change', function() {
+    localStorage.setItem('dbu_comment_name', nameInput.value.trim());
+  });
+
+  function getComments() {
+    try { return JSON.parse(localStorage.getItem('dbu_comments_ch' + chNum) || '[]'); } catch(e) { return []; }
+  }
+
+  function saveComments(arr) {
+    try { localStorage.setItem('dbu_comments_ch' + chNum, JSON.stringify(arr)); } catch(e) {}
+  }
+
+  function renderComments() {
+    var comments = getComments();
+    if (comments.length === 0) {
+      listEl.innerHTML = '<div class="no-comments">No hay comentarios todavia. ¡Se el primero!</div>';
+      return;
+    }
+    listEl.innerHTML = comments.map(function(c, i) {
+      return '<div class="comment-item" data-index="' + i + '">' +
+        '<div class="comment-author">' + escHtml(c.author) + '</div>' +
+        '<div class="comment-text">' + escHtml(c.text) + '</div>' +
+        '<div class="comment-date">' + c.date + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  submitBtn.addEventListener('click', function() {
+    var author = nameInput.value.trim() || 'Saiyajin Anonimo';
+    var text   = textInput.value.trim();
+    if (!text) return;
+    if (text.length > 280) return;
+    var now = new Date();
+    var date = now.toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'}) + ' ' +
+               now.toLocaleTimeString('es-AR', {hour:'2-digit',minute:'2-digit'});
+    var comments = getComments();
+    comments.unshift({ author: author, text: text, date: date, id: Date.now() });
+    saveComments(comments);
+    localStorage.setItem('dbu_comment_name', author);
+    textInput.value = '';
+    countEl.textContent = '0 / 280';
+    renderComments();
+  });
+
+  renderComments();
+}
+
+// Helper to delete comment by index (call from console: deleteComment(1, index))
+window.deleteComment = function(chNum, index) {
+  var comments = [];
+  try { comments = JSON.parse(localStorage.getItem('dbu_comments_ch' + chNum) || '[]'); } catch(e) {}
+  comments.splice(index, 1);
+  localStorage.setItem('dbu_comments_ch' + chNum, JSON.stringify(comments));
+  initComments(chNum);
+  console.log('Comment deleted.');
+};
+
+initComments(1);
 initRating(1);
 
 </script>
