@@ -332,12 +332,13 @@
 
 
     /* FULLSCREEN READER */
-    .fullscreen-overlay { display:none; position:fixed; inset:0; background:#000; z-index:9999; flex-direction:column; align-items:center; justify-content:center; }
+    body.fs-open { overflow:hidden !important; position:fixed; width:100%; }
+    .fullscreen-overlay { display:none; position:fixed; top:0; left:0; width:100vw; height:100%; min-height:100%; background:#000; z-index:99999; flex-direction:column; align-items:center; justify-content:center; }
     .fullscreen-overlay.active { display:flex; }
     .fs-page-wrap { width:100%; height:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
     .fs-page-inner { width:100%; height:100%; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
-    .fs-top-bar { position:fixed; top:0; left:0; right:0; height:52px; background:linear-gradient(180deg,rgba(0,0,0,0.85) 0%,transparent 100%); display:flex; align-items:center; justify-content:space-between; padding:0 16px; z-index:10000; transition:opacity 0.3s; }
-    .fs-bottom-bar { position:fixed; bottom:0; left:0; right:0; height:60px; background:linear-gradient(0deg,rgba(0,0,0,0.85) 0%,transparent 100%); display:flex; align-items:center; justify-content:center; gap:20px; z-index:10000; transition:opacity 0.3s; }
+    .fs-top-bar { position:fixed; top:0; left:0; right:0; height:52px; background:linear-gradient(180deg,rgba(0,0,0,0.9) 0%,transparent 100%); display:flex; align-items:center; justify-content:space-between; padding:0 16px; z-index:100001; transition:opacity 0.3s; }
+    .fs-bottom-bar { position:fixed; bottom:0; left:0; right:0; height:60px; background:linear-gradient(0deg,rgba(0,0,0,0.9) 0%,transparent 100%); display:flex; align-items:center; justify-content:center; gap:20px; z-index:100001; transition:opacity 0.3s; }
     .fs-top-bar.hidden, .fs-bottom-bar.hidden { opacity:0; pointer-events:none; }
     .fs-btn { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:#fff; font-family:'Bangers',cursive; letter-spacing:1px; font-size:0.85rem; padding:6px 16px; border-radius:4px; cursor:pointer; transition:background 0.2s; }
     .fs-btn:hover { background:rgba(250,204,21,0.25); border-color:var(--yellow); color:var(--yellow); }
@@ -567,7 +568,17 @@ function goToSection(id) {
   var link = document.querySelector('nav a[data-section="' + id + '"]');
   if (link) link.classList.add('active');
   window.scrollTo({top:0, behavior:'smooth'});
+  history.replaceState(null, '', '#' + id);
 }
+
+// Restore section from URL hash on load
+(function() {
+  var hash = window.location.hash.replace('#', '');
+  var valid = ['inicio','manga','novedades','faq','contacto','creditos'];
+  if (hash && valid.indexOf(hash) !== -1) {
+    goToSection(hash);
+  }
+})();
 
 document.querySelectorAll('nav a').forEach(function(link) {
   link.addEventListener('click', function(e) {
@@ -748,16 +759,22 @@ function openFullscreen(chNum) {
   fsActive = true;
   fsChNum = chNum;
   fsPage = currentPage[chNum] || 1;
-  document.getElementById('fs-overlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
+  var overlay = document.getElementById('fs-overlay');
+  overlay.classList.add('active');
+  document.body.classList.add('fs-open');
+  // Try native fullscreen API
+  var el = document.documentElement;
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
   preloadInitial(chNum);
   fsRenderPage(fsPage, null);
   initFsSwipe();
-  if (window.innerWidth < 768) {
+  // Show hint on mobile
+  if (window.innerWidth < 900) {
     var hint = document.createElement('div');
     hint.className = 'fs-drag-hint';
     hint.textContent = 'DESLIZA PARA PASAR PAGINA';
-    document.getElementById('fs-overlay').appendChild(hint);
+    overlay.appendChild(hint);
     setTimeout(function(){ if(hint.parentNode) hint.parentNode.removeChild(hint); }, 3000);
   }
 }
@@ -765,10 +782,21 @@ function openFullscreen(chNum) {
 function closeFullscreen() {
   fsActive = false;
   document.getElementById('fs-overlay').classList.remove('active');
-  document.body.style.overflow = '';
+  document.body.classList.remove('fs-open');
+  // Exit native fullscreen
+  if (document.exitFullscreen && document.fullscreenElement) document.exitFullscreen();
+  else if (document.webkitExitFullscreen && document.webkitFullscreenElement) document.webkitExitFullscreen();
   currentPage[fsChNum] = fsPage;
   renderPage(fsChNum, fsPage);
 }
+
+// Also close if user exits native fullscreen with device back button
+document.addEventListener('fullscreenchange', function() {
+  if (!document.fullscreenElement && fsActive) closeFullscreen();
+});
+document.addEventListener('webkitfullscreenchange', function() {
+  if (!document.webkitFullscreenElement && fsActive) closeFullscreen();
+});
 
 function fsRenderPage(pageNum, direction) {
   fsPage = pageNum;
