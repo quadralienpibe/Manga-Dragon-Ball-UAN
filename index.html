@@ -1089,8 +1089,7 @@ var firebaseConfig = {
 function loadFirebase(callback) {
   var scripts = [
     'https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js',
-    'https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js',
-    'https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js'
+    'https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js'
   ];
   var loaded = 0;
   scripts.forEach(function(src) {
@@ -1107,7 +1106,6 @@ function loadFirebase(callback) {
 loadFirebase(function() {
   firebase.initializeApp(firebaseConfig);
   var db = firebase.database();
-  var analytics = firebase.analytics();
 
   // ===== REALTIME COMMENTS =====
   function initComments(chNum) {
