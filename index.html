@@ -333,11 +333,17 @@
 
     /* FULLSCREEN READER */
     body.fs-open { overflow:hidden !important; position:fixed; width:100%; }
-    .fullscreen-overlay { display:none; position:fixed; top:0; left:0; width:100vw; height:100%; min-height:100%; background:#000; z-index:99999; flex-direction:column; align-items:center; justify-content:center; }
+    .fullscreen-overlay { display:none; position:fixed; top:0; left:0; width:100vw; height:100dvh; background:#000; z-index:99999; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; }
     .fullscreen-overlay.active { display:flex; }
     .fs-page-wrap { width:100%; height:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
     .fs-page-inner { width:100%; height:100%; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
     .fs-top-bar { position:fixed; top:0; left:0; right:0; height:52px; background:linear-gradient(180deg,rgba(0,0,0,0.9) 0%,transparent 100%); display:flex; align-items:center; justify-content:space-between; padding:0 16px; z-index:100001; transition:opacity 0.3s; }
+    @media(max-width:768px) {
+      .fs-top-bar { opacity:0; pointer-events:none; }
+      .fs-top-bar.visible { opacity:1; pointer-events:auto; }
+      .fs-bottom-bar { display:none !important; }
+      .fullscreen-overlay { touch-action:pan-y; }
+    }
     .fs-bottom-bar { position:fixed; bottom:0; left:0; right:0; height:60px; background:linear-gradient(0deg,rgba(0,0,0,0.9) 0%,transparent 100%); display:flex; align-items:center; justify-content:center; gap:20px; z-index:100001; transition:opacity 0.3s; }
     .fs-top-bar.hidden, .fs-bottom-bar.hidden { opacity:0; pointer-events:none; }
     .fs-btn { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:#fff; font-family:'Bangers',cursive; letter-spacing:1px; font-size:0.85rem; padding:6px 16px; border-radius:4px; cursor:pointer; transition:background 0.2s; }
@@ -539,6 +545,7 @@
 
 
   <div class="fullscreen-overlay" id="fs-overlay">
+    <button id="fs-mobile-close" style="display:none;position:fixed;top:12px;right:12px;z-index:100002;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:1.4rem;width:44px;height:44px;border-radius:50%;cursor:pointer;line-height:1;transition:opacity 0.3s;opacity:0;pointer-events:none;">&#x2715;</button>
     <div class="fs-top-bar" id="fs-top-bar">
       <span style="font-family:'Bangers',cursive;letter-spacing:2px;color:var(--yellow);font-size:1rem;">CAP. 01 · LOS BUENOS Y LOS MALOS</span>
       <button class="fs-close" id="fs-close-btn">&#x2715;</button>
@@ -759,23 +766,44 @@ function openFullscreen(chNum) {
   fsActive = true;
   fsChNum = chNum;
   fsPage = currentPage[chNum] || 1;
+  isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
   var overlay = document.getElementById('fs-overlay');
   overlay.classList.add('active');
   document.body.classList.add('fs-open');
+  barsVisible = false;
+
   // Try native fullscreen API
   var el = document.documentElement;
-  if (el.requestFullscreen) el.requestFullscreen();
+  if (el.requestFullscreen) el.requestFullscreen().catch(function(){});
   else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+
+  // Mobile: show tap-to-reveal close button, hide all bars
+  var mobileClose = document.getElementById('fs-mobile-close');
+  if (isMobile) {
+    mobileClose.style.display = 'block';
+    mobileClose.style.opacity = '0';
+    mobileClose.style.pointerEvents = 'none';
+    var top = document.getElementById('fs-top-bar');
+    top.classList.remove('visible');
+  } else {
+    mobileClose.style.display = 'none';
+    // Desktop: show bars
+    barsVisible = true;
+    document.getElementById('fs-top-bar').classList.remove('hidden');
+    document.getElementById('fs-bottom-bar').classList.remove('hidden');
+  }
+
   preloadInitial(chNum);
   fsRenderPage(fsPage, null);
   initFsSwipe();
-  // Show hint on mobile
-  if (window.innerWidth < 900) {
+
+  // Hint on mobile
+  if (isMobile) {
     var hint = document.createElement('div');
     hint.className = 'fs-drag-hint';
-    hint.textContent = 'DESLIZA PARA PASAR PAGINA';
+    hint.textContent = 'DESLIZA PARA CAMBIAR PAGINA · TOCA PARA CERRAR';
     overlay.appendChild(hint);
-    setTimeout(function(){ if(hint.parentNode) hint.parentNode.removeChild(hint); }, 3000);
+    setTimeout(function(){ if(hint.parentNode) hint.parentNode.removeChild(hint); }, 3500);
   }
 }
 
@@ -860,14 +888,39 @@ document.addEventListener('keydown', function(e) {
 });
 
 var barsVisible = true;
+var isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+
 document.getElementById('fs-page-wrap').addEventListener('click', function(e) {
   if (e.target.closest('button')) return;
-  barsVisible = !barsVisible;
-  var top = document.getElementById('fs-top-bar');
-  var bot = document.getElementById('fs-bottom-bar');
-  if (barsVisible) { top.classList.remove('hidden'); bot.classList.remove('hidden'); }
-  else { top.classList.add('hidden'); bot.classList.add('hidden'); }
+  if (isMobile) {
+    // On mobile: toggle close button only
+    var mobileClose = document.getElementById('fs-mobile-close');
+    barsVisible = !barsVisible;
+    if (barsVisible) {
+      mobileClose.style.opacity = '1';
+      mobileClose.style.pointerEvents = 'auto';
+    } else {
+      mobileClose.style.opacity = '0';
+      mobileClose.style.pointerEvents = 'none';
+    }
+  } else {
+    // On desktop: toggle top and bottom bars
+    barsVisible = !barsVisible;
+    var top = document.getElementById('fs-top-bar');
+    var bot = document.getElementById('fs-bottom-bar');
+    if (barsVisible) { top.classList.remove('hidden'); bot.classList.remove('hidden'); }
+    else { top.classList.add('hidden'); bot.classList.add('hidden'); }
+  }
 });
+
+// Mobile close button
+var mobileCloseBtn = document.getElementById('fs-mobile-close');
+if (mobileCloseBtn) {
+  mobileCloseBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    closeFullscreen();
+  });
+}
 
 function initFsSwipe() {
   var el = document.getElementById('fs-overlay');
