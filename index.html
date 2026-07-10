@@ -439,7 +439,7 @@
   <a href="#" id="logo-link"><img class="logo-img" src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778632619/Logo_yjs5ri.png" alt="Dragon Ball UAN"/></a>
   <div class="tagline">✦ Universal Anthologies · Fan Manga ✦</div>
   <div class="lang-toggle-wrap">
-    <button class="lang-btn" id="lang-toggle" title="Switch language / Cambiar idioma">EN</button>
+    <button class="lang-btn" id="lang-toggle" title="Switch language / Cambiar idioma">English</button>
   </div>
   <nav>
     <a href="#" data-section="inicio"   class="active" data-es="Inicio" data-en="Home">Inicio</a>
@@ -1083,8 +1083,8 @@ var faqData = [
    qEn:"Will there be references to other Dragon Ball material?", aEn:"Yes. There will be references, tributes, and inspiration drawn from different material related to Dragon Ball and other works by Akira Toriyama."},
   {q:"¿Habrá referencias a trabajos de fans?", a:"Sí. La obra incluirá homenajes e inspiraciones tomadas de diseños e ideas de fans. Siempre que sea posible, se darán los créditos correspondientes.",
    qEn:"Will there be references to fan works?", aEn:"Yes. The work will include tributes and inspiration drawn from fan designs and ideas. Credit will be given whenever possible."},
-  {q:"¿Se utiliza inteligencia artificial en el proyecto?", a:"Sí. Hay una gran cantidad de IA involucrada en la producción del manga. Sin embargo, también hay mucho trabajo manual para corregir, redibujar y pulir las inconsistencias de la IA.",
-   qEn:"Is artificial intelligence used in the project?", aEn:"Yes. A significant amount of AI is involved in producing the manga. However, there is also a lot of manual work to fix, redraw, and polish the AI's inconsistencies."},
+  {q:"¿Se utiliza inteligencia artificial en el proyecto?", a:"Sí, aunque en una proporción pequeña dentro del proceso general. La IA se usa puntualmente para bocetos iniciales que luego son redibujados a mano, para algunos fondos específicos, y en ciertos casos para el reescalado de imágenes. El resto del trabajo —composición, línea final, corrección, edición y pulido— es enteramente manual.",
+   qEn:"Is artificial intelligence used in the project?", aEn:"Yes, though it plays a small role within the overall process. AI is used selectively for initial sketches that are later redrawn by hand, for a few specific backgrounds, and in some cases for image upscaling. The rest of the work — composition, final line art, correction, editing, and polish — is entirely done by hand."},
   {q:"¿Cada cuánto tiempo saldrán nuevos capítulos?", a:"La intención es publicar un capítulo por mes, siempre que las posibilidades y el tiempo disponible lo permitan.",
    qEn:"How often will new chapters come out?", aEn:"The goal is to publish one chapter per month, whenever time and circumstances allow it."},
   {q:"¿Cuántas páginas tendrá cada capítulo?", a:"La cantidad de páginas puede variar según las necesidades de cada entrega y el tiempo de producción.",
@@ -1125,7 +1125,7 @@ function applyStaticTranslations(lang) {
   });
   document.documentElement.lang = lang;
   var toggleBtn = document.getElementById('lang-toggle');
-  if (toggleBtn) toggleBtn.textContent = lang === 'es' ? 'EN' : 'ES';
+  if (toggleBtn) toggleBtn.textContent = lang === 'es' ? 'English' : 'Español';
 }
 
 function setLanguage(lang, isInitial) {
