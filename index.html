@@ -420,6 +420,17 @@
       .chapter-header { flex-wrap:wrap; gap:10px; }
       nav a { font-size:0.8rem; padding:5px 9px; letter-spacing:1px; }
     }
+
+    /* LANG TOGGLE */
+    .lang-toggle-wrap { display:flex; justify-content:center; margin-top:14px; }
+    .lang-btn {
+      background:var(--dark3); border:1px solid rgba(250,204,21,0.35);
+      color:var(--yellow); font-family:'Bangers',cursive;
+      letter-spacing:2px; font-size:0.85rem;
+      padding:6px 20px; border-radius:20px; cursor:pointer;
+      transition:all 0.2s;
+    }
+    .lang-btn:hover { background:rgba(250,204,21,0.15); border-color:var(--yellow); }
   </style>
 </head>
 <body>
@@ -427,13 +438,16 @@
 <header>
   <a href="#" id="logo-link"><img class="logo-img" src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778632619/Logo_yjs5ri.png" alt="Dragon Ball UAN"/></a>
   <div class="tagline">✦ Universal Anthologies · Fan Manga ✦</div>
+  <div class="lang-toggle-wrap">
+    <button class="lang-btn" id="lang-toggle" title="Switch language / Cambiar idioma">EN</button>
+  </div>
   <nav>
-    <a href="#" data-section="inicio"   class="active">Inicio</a>
-    <a href="#" data-section="manga"           >Leer Manga</a>
-    <a href="#" data-section="novedades"       >Novedades</a>
-    <a href="#" data-section="faq"             >Preguntas Frecuentes</a>
-    <a href="#" data-section="contacto"        >Contacto</a>
-    <a href="#" data-section="creditos"        >Créditos</a>
+    <a href="#" data-section="inicio"   class="active" data-es="Inicio" data-en="Home">Inicio</a>
+    <a href="#" data-section="manga"           data-es="Leer Manga" data-en="Read Manga">Leer Manga</a>
+    <a href="#" data-section="novedades"       data-es="Novedades" data-en="News">Novedades</a>
+    <a href="#" data-section="faq"             data-es="Preguntas Frecuentes" data-en="FAQ">Preguntas Frecuentes</a>
+    <a href="#" data-section="contacto"        data-es="Contacto" data-en="Contact">Contacto</a>
+    <a href="#" data-section="creditos"        data-es="Créditos" data-en="Credits">Créditos</a>
   </nav>
 </header>
 
@@ -444,40 +458,40 @@
     <div class="hero-banner">
       <img src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778686737/Portada_wbk7zb.png" alt="Dragon Ball UAN - Capítulo 1" style="width:100%;max-height:480px;object-fit:cover;object-position:top;display:block;opacity:0.9;">
       <div class="hero-overlay">
-        <div class="hero-tag">🆕 Última publicación</div>
-        <div class="hero-title">Capítulo 1: Los Buenos y los Malos</div>
-        <div class="hero-desc">El primer capítulo de Dragon Ball UAN ya está disponible. Un nuevo universo que continúa la historia del manga original de Akira Toriyama.</div>
-        <a class="hero-btn" id="hero-read-btn">Leer ahora →</a>
+        <div class="hero-tag" data-es="🆕 Última publicación" data-en="🆕 Latest release">🆕 Última publicación</div>
+        <div class="hero-title" data-es="Capítulo 1: Los Buenos y los Malos" data-en="Chapter 1: The Good and the Bad">Capítulo 1: Los Buenos y los Malos</div>
+        <div class="hero-desc" data-es="El primer capítulo de Dragon Ball UAN ya está disponible. Un nuevo universo que continúa la historia del manga original de Akira Toriyama." data-en="The first chapter of Dragon Ball UAN is now available. A new universe that continues the story of Akira Toriyama's original manga.">El primer capítulo de Dragon Ball UAN ya está disponible. Un nuevo universo que continúa la historia del manga original de Akira Toriyama.</div>
+        <a class="hero-btn" id="hero-read-btn" data-es="Leer ahora →" data-en="Read now →">Leer ahora →</a>
       </div>
     </div>
 
     <div style="background:var(--dark2);border:1px solid rgba(30,58,138,0.3);border-radius:12px;padding:28px 32px;margin-bottom:36px;position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--yellow),var(--blue));"></div>
-      <h2 style="font-family:'Bangers',cursive;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:3px;color:var(--yellow);margin-bottom:18px;text-shadow:0 0 15px rgba(250,204,21,0.3);">🐉 ¿DE QUÉ TRATA DRAGON BALL UAN?</h2>
-      <p style="font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:12px;">Dragon Ball UAN comienza el mismo día en que Majin Boo es destruido por la Genki Dama de Son Goku. Mientras la Tierra celebra el fin de una de las mayores amenazas de su historia, algo imperceptible ocurre detrás del deseo formulado a Porunga.</p>
-      <p style="font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:12px;"><strong style="color:var(--text);">Sambal, gobernante de los Infiernos, ha decidido intervenir.</strong></p>
-      <p style="font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:12px;">Cansado de las constantes violaciones al equilibrio natural, del abuso de las Esferas del Dragón y de cómo Goku y sus aliados han alterado innumerables veces el destino de los muertos, Sambal manipula discretamente el deseo que debía revivir a todas las víctimas inocentes de Majin Boo. El resultado es apenas diferente… pero suficiente para cambiarlo todo.</p>
-      <p style="font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:12px;">A partir de ese instante, una serie de sucesos anormales comienza a desarrollarse en distintos rincones del universo. Personas que no deberían existir. Presencias imposibles. Recuerdos alterados. Almas que jamás regresaron. Y fuerzas antiguas que comienzan a moverse tras décadas de silencio.</p>
-      <p style="font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:12px;">Sin saberlo, Goku y sus amigos han cruzado un límite que jamás debió ser atravesado.</p>
+      <h2 style="font-family:'Bangers',cursive;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:3px;color:var(--yellow);margin-bottom:18px;text-shadow:0 0 15px rgba(250,204,21,0.3);" data-es="🐉 ¿DE QUÉ TRATA DRAGON BALL UAN?" data-en="🐉 WHAT IS DRAGON BALL UAN ABOUT?">🐉 ¿DE QUÉ TRATA DRAGON BALL UAN?</h2>
+      <p style="font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:12px;" data-es="Dragon Ball UAN comienza el mismo día en que Majin Boo es destruido por la Genki Dama de Son Goku. Mientras la Tierra celebra el fin de una de las mayores amenazas de su historia, algo imperceptible ocurre detrás del deseo formulado a Porunga." data-en="Dragon Ball UAN begins on the very day Majin Boo is destroyed by Son Goku's Spirit Bomb. While Earth celebrates the end of one of its greatest threats, something imperceptible happens behind the wish made to Porunga.">Dragon Ball UAN comienza el mismo día en que Majin Boo es destruido por la Genki Dama de Son Goku. Mientras la Tierra celebra el fin de una de las mayores amenazas de su historia, algo imperceptible ocurre detrás del deseo formulado a Porunga.</p>
+      <p style="font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:12px;" data-es="<strong style=&quot;color:var(--text);&quot;>Sambal, gobernante de los Infiernos, ha decidido intervenir.</strong>" data-en="<strong style=&quot;color:var(--text);&quot;>Sambal, ruler of the Underworld, has decided to intervene.</strong>"><strong style="color:var(--text);">Sambal, gobernante de los Infiernos, ha decidido intervenir.</strong></p>
+      <p style="font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:12px;" data-es="Cansado de las constantes violaciones al equilibrio natural, del abuso de las Esferas del Dragón y de cómo Goku y sus aliados han alterado innumerables veces el destino de los muertos, Sambal manipula discretamente el deseo que debía revivir a todas las víctimas inocentes de Majin Boo. El resultado es apenas diferente… pero suficiente para cambiarlo todo." data-en="Tired of the constant violations of natural balance, the abuse of the Dragon Balls, and how Goku and his allies have repeatedly altered the fate of the dead, Sambal quietly manipulates the wish meant to revive all of Majin Boo's innocent victims. The result is barely different… but enough to change everything.">Cansado de las constantes violaciones al equilibrio natural, del abuso de las Esferas del Dragón y de cómo Goku y sus aliados han alterado innumerables veces el destino de los muertos, Sambal manipula discretamente el deseo que debía revivir a todas las víctimas inocentes de Majin Boo. El resultado es apenas diferente… pero suficiente para cambiarlo todo.</p>
+      <p style="font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:12px;" data-es="A partir de ese instante, una serie de sucesos anormales comienza a desarrollarse en distintos rincones del universo. Personas que no deberían existir. Presencias imposibles. Recuerdos alterados. Almas que jamás regresaron. Y fuerzas antiguas que comienzan a moverse tras décadas de silencio." data-en="From that moment on, a series of abnormal events begins to unfold across different corners of the universe. People who shouldn't exist. Impossible presences. Altered memories. Souls that never returned. And ancient forces beginning to stir after decades of silence.">A partir de ese instante, una serie de sucesos anormales comienza a desarrollarse en distintos rincones del universo. Personas que no deberían existir. Presencias imposibles. Recuerdos alterados. Almas que jamás regresaron. Y fuerzas antiguas que comienzan a moverse tras décadas de silencio.</p>
+      <p style="font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:12px;" data-es="Sin saberlo, Goku y sus amigos han cruzado un límite que jamás debió ser atravesado." data-en="Without knowing it, Goku and his friends have crossed a line that should never have been crossed.">Sin saberlo, Goku y sus amigos han cruzado un límite que jamás debió ser atravesado.</p>
     </div>
-    <h2 class="section-title">⚡ Últimas Publicaciones</h2>
+    <h2 class="section-title" data-es="⚡ Últimas Publicaciones" data-en="⚡ Latest Posts">⚡ Últimas Publicaciones</h2>
     <div class="latest-grid">
       <div class="post-card" data-goto="manga">
         <div class="post-card-icon">📖</div>
         <div class="post-card-body">
-          <div class="post-tag">📖 Nuevo capítulo</div>
-          <h3>Capítulo 1: Los Buenos y los Malos</h3>
-          <p>Tras la derrota de Majin Boo, una nueva amenaza comienza a tomar forma en las sombras del Otro Mundo.</p>
-          <div class="post-date">Mayo 2025</div>
+          <div class="post-tag" data-es="📖 Nuevo capítulo" data-en="📖 New chapter">📖 Nuevo capítulo</div>
+          <h3 data-es="Capítulo 1: Los Buenos y los Malos" data-en="Chapter 1: The Good and the Bad">Capítulo 1: Los Buenos y los Malos</h3>
+          <p data-es="Tras la derrota de Majin Boo, una nueva amenaza comienza a tomar forma en las sombras del Otro Mundo." data-en="After Majin Boo's defeat, a new threat begins to take shape in the shadows of the Other World.">Tras la derrota de Majin Boo, una nueva amenaza comienza a tomar forma en las sombras del Otro Mundo.</p>
+          <div class="post-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</div>
         </div>
       </div>
       <div class="post-card" data-goto="novedades">
         <div class="post-card-icon">🌌</div>
         <div class="post-card-body">
-          <div class="post-tag">📢 Proyecto</div>
-          <h3>¡Dragon Ball UAN está en línea!</h3>
-          <p>El blog oficial de Dragon Ball UAN ya está activo. Seguí las novedades desde acá.</p>
-          <div class="post-date">Mayo 2025</div>
+          <div class="post-tag" data-es="📢 Proyecto" data-en="📢 Project">📢 Proyecto</div>
+          <h3 data-es="¡Dragon Ball UAN está en línea!" data-en="Dragon Ball UAN is online!">¡Dragon Ball UAN está en línea!</h3>
+          <p data-es="El blog oficial de Dragon Ball UAN ya está activo. Seguí las novedades desde acá." data-en="The official Dragon Ball UAN blog is now live. Follow the news right here.">El blog oficial de Dragon Ball UAN ya está activo. Seguí las novedades desde acá.</p>
+          <div class="post-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</div>
         </div>
       </div>
     </div>
@@ -485,27 +499,27 @@
 
   <!-- LEER MANGA -->
   <section id="manga" class="section">
-    <h2 class="section-title">📖 Leer Manga</h2>
+    <h2 class="section-title" data-es="📖 Leer Manga" data-en="📖 Read Manga">📖 Leer Manga</h2>
     <div class="chapter-entry">
       <div class="chapter-header" id="ch1-header">
         <div class="chapter-info">
-          <span class="chapter-num">CAP. 01</span>
+          <span class="chapter-num" data-es="CAP. 01" data-en="CH. 01">CAP. 01</span>
           <div class="chapter-meta">
-            <h3>Los Buenos y los Malos</h3>
-            <span>43 páginas · Mayo 2025</span>
+            <h3 data-es="Los Buenos y los Malos" data-en="The Good and the Bad">Los Buenos y los Malos</h3>
+            <span data-es="16 páginas · Mayo 2025" data-en="16 pages · May 2025">16 páginas · Mayo 2025</span>
           </div>
         </div>
-        <button class="btn-read" id="ch1-btn">LEER ▾</button><button class="btn-fullscreen" id="ch1-fs-btn">&#x26F6; Pantalla completa</button>
+        <button class="btn-read" id="ch1-btn" data-es="LEER ▾" data-en="READ ▾">LEER ▾</button><button class="btn-fullscreen" id="ch1-fs-btn" data-es="&#x26F6; Pantalla completa" data-en="&#x26F6; Fullscreen">&#x26F6; Pantalla completa</button>
       </div>
       <div class="manga-pages" id="pages-1">
         <div id="page-display-1" style="text-align:center;"></div>
         <div class="manga-nav">
-          <button id="prev-1">◀ ANTERIOR</button>
-          <span class="page-counter" id="counter-1">01 / 42</span>
-          <button id="next-1">SIGUIENTE ▶</button>
+          <button id="prev-1" data-es="◀ ANTERIOR" data-en="◀ PREVIOUS">◀ ANTERIOR</button>
+          <span class="page-counter" id="counter-1">01 / 16</span>
+          <button id="next-1" data-es="SIGUIENTE ▶" data-en="NEXT ▶">SIGUIENTE ▶</button>
         </div>
         <div class="rating-box">
-          <h4>⭐ ¿QUÉ TE PARECIÓ ESTE CAPÍTULO?</h4>
+          <h4 data-es="⭐ ¿QUÉ TE PARECIÓ ESTE CAPÍTULO?" data-en="⭐ WHAT DID YOU THINK OF THIS CHAPTER?">⭐ ¿QUÉ TE PARECIÓ ESTE CAPÍTULO?</h4>
           <div class="stars" id="stars-1">
             <span class="star" data-val="1">★</span>
             <span class="star" data-val="2">★</span>
@@ -514,15 +528,15 @@
             <span class="star" data-val="5">★</span>
           </div>
           <div class="rating-result" id="rating-result-1"></div>
-          <button class="btn-rate" id="btn-rate-1" disabled>Votar</button>
+          <button class="btn-rate" id="btn-rate-1" disabled data-es="Votar" data-en="Vote">Votar</button>
         </div>
         <div class="comments-box">
-          <h4>💬 COMENTARIOS</h4>
+          <h4 data-es="💬 COMENTARIOS" data-en="💬 COMMENTS">💬 COMENTARIOS</h4>
           <div class="comment-form">
-            <input type="text" id="comment-name-1" placeholder="Tu nombre (por defecto: Saiyajin Anonimo)" maxlength="30"/>
-            <textarea id="comment-text-1" placeholder="¿Qué te pareció el capítulo? (máx. 280 caracteres)" maxlength="280"></textarea>
+            <input type="text" id="comment-name-1" placeholder="Tu nombre (por defecto: Saiyajin Anonimo)" data-es-placeholder="Tu nombre (por defecto: Saiyajin Anonimo)" data-en-placeholder="Your name (default: Anonymous Saiyan)" maxlength="30"/>
+            <textarea id="comment-text-1" placeholder="¿Qué te pareció el capítulo? (máx. 280 caracteres)" data-es-placeholder="¿Qué te pareció el capítulo? (máx. 280 caracteres)" data-en-placeholder="What did you think of the chapter? (max. 280 characters)" maxlength="280"></textarea>
             <div class="comment-char-count" id="comment-count-1">0 / 280</div>
-            <button class="comment-submit" id="comment-submit-1">Comentar</button>
+            <button class="comment-submit" id="comment-submit-1" data-es="Comentar" data-en="Comment">Comentar</button>
           </div>
           <div class="comments-list" id="comments-list-1"></div>
         </div>
@@ -532,16 +546,16 @@
 
   <!-- NOVEDADES -->
   <section id="novedades" class="section">
-    <h2 class="section-title">📢 Novedades</h2>
+    <h2 class="section-title" data-es="📢 Novedades" data-en="📢 News">📢 Novedades</h2>
     <div class="news-item">
-      <h3>¡Capítulo 1 disponible: "Los Buenos y los Malos"!</h3>
-      <p>El primer capítulo de Dragon Ball UAN ya está publicado. La historia comienza justo después del final del manga original, explorando qué ocurre con los personajes y las fuerzas del más allá. Podés leerlo completo en la sección "Leer Manga".</p>
-      <div class="news-date">Mayo 2025</div>
+      <h3 data-es="¡Capítulo 1 disponible: &quot;Los Buenos y los Malos&quot;!" data-en="Chapter 1 available: &quot;The Good and the Bad&quot;!">¡Capítulo 1 disponible: "Los Buenos y los Malos"!</h3>
+      <p data-es="El primer capítulo de Dragon Ball UAN ya está publicado. La historia comienza justo después del final del manga original, explorando qué ocurre con los personajes y las fuerzas del más allá. Podés leerlo completo en la sección &quot;Leer Manga&quot;." data-en="The first chapter of Dragon Ball UAN is now published. The story begins right after the ending of the original manga, exploring what happens to the characters and the forces of the afterlife. You can read it in full in the &quot;Read Manga&quot; section.">El primer capítulo de Dragon Ball UAN ya está publicado. La historia comienza justo después del final del manga original, explorando qué ocurre con los personajes y las fuerzas del más allá. Podés leerlo completo en la sección "Leer Manga".</p>
+      <div class="news-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</div>
     </div>
     <div class="news-item">
-      <h3>Bienvenidos a Dragon Ball UAN</h3>
-      <p>Este es el blog oficial de Dragon Ball UAN (Universal Anthologies), el fan manga creado por Quadralien. La historia toma como único canon el manga original de Akira Toriyama. Sin relleno de anime, sin Super, sin GT: solo el manga.</p>
-      <div class="news-date">Mayo 2025</div>
+      <h3 data-es="Bienvenidos a Dragon Ball UAN" data-en="Welcome to Dragon Ball UAN">Bienvenidos a Dragon Ball UAN</h3>
+      <p data-es="Este es el blog oficial de Dragon Ball UAN (Universal Anthologies), el fan manga creado por Quadralien. La historia toma como único canon el manga original de Akira Toriyama. Sin relleno de anime, sin Super, sin GT: solo el manga." data-en="This is the official blog of Dragon Ball UAN (Universal Anthologies), the fan manga created by Quadralien. The story treats only the original Akira Toriyama manga as canon. No anime filler, no Super, no GT: just the manga.">Este es el blog oficial de Dragon Ball UAN (Universal Anthologies), el fan manga creado por Quadralien. La historia toma como único canon el manga original de Akira Toriyama. Sin relleno de anime, sin Super, sin GT: solo el manga.</p>
+      <div class="news-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</div>
     </div>
     
   </section>
@@ -550,14 +564,14 @@
 
   <!-- FAQ -->
   <section id="faq" class="section">
-    <h2 class="section-title">❓ Preguntas Frecuentes</h2>
+    <h2 class="section-title" data-es="❓ Preguntas Frecuentes" data-en="❓ Frequently Asked Questions">❓ Preguntas Frecuentes</h2>
     <div id="faq-list"></div>
   </section>
 
   <!-- CONTACTO -->
   <section id="contacto" class="section">
-    <h2 class="section-title">✉ Contacto</h2>
-    <p style="color:var(--muted);margin-bottom:24px;font-size:0.92rem;line-height:1.7;max-width:520px;">
+    <h2 class="section-title" data-es="✉ Contacto" data-en="✉ Contact">✉ Contacto</h2>
+    <p style="color:var(--muted);margin-bottom:24px;font-size:0.92rem;line-height:1.7;max-width:520px;" data-es="Para consultas, sugerencias o simplemente charlar sobre Dragon Ball UAN, encontrás a Quadralien en:" data-en="For questions, suggestions, or just to chat about Dragon Ball UAN, you can find Quadralien on:">
       Para consultas, sugerencias o simplemente charlar sobre Dragon Ball UAN, encontrás a Quadralien en:
     </p>
     <div class="contact-links">
@@ -581,29 +595,29 @@
 
   <!-- CREDITOS -->
   <section id="creditos" class="section">
-    <h2 class="section-title">🌟 Créditos</h2>
+    <h2 class="section-title" data-es="🌟 Créditos" data-en="🌟 Credits">🌟 Créditos</h2>
     <div class="credits-wrap">
       <img class="credits-logo-img" src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778632619/Logo_yjs5ri.png" alt="Dragon Ball UAN"/>
-      <p class="credits-desc">
+      <p class="credits-desc" data-es="Dragon Ball UAN (Universal Anthologies) es un fan manga que continúa la historia del manga original de Dragon Ball escrito por Akira Toriyama. La obra no pretende reemplazar ni superar otros materiales, sino explorar un camino alternativo que respete el material original y le rinda homenaje." data-en="Dragon Ball UAN (Universal Anthologies) is a fan manga that continues the story of Akira Toriyama's original Dragon Ball manga. The work does not intend to replace or surpass other material, but to explore an alternative path that respects and pays tribute to the original.">
         Dragon Ball UAN (Universal Anthologies) es un fan manga que continúa la historia del manga original de Dragon Ball escrito por Akira Toriyama. La obra no pretende reemplazar ni superar otros materiales, sino explorar un camino alternativo que respete el material original y le rinda homenaje.
       </p>
       <div class="credits-list">
         <div class="credits-item">
           <strong>Akira Toriyama</strong>
-          <span>Creador original de Dragon Ball · Esta obra es un homenaje a su legado</span>
+          <span data-es="Creador original de Dragon Ball · Esta obra es un homenaje a su legado" data-en="Original creator of Dragon Ball · This work is a tribute to his legacy">Creador original de Dragon Ball · Esta obra es un homenaje a su legado</span>
         </div>
         <div class="credits-item">
           <strong>Toyotaro</strong>
-          <span>Por sus contribuciones e inspiración dentro de la franquicia</span>
+          <span data-es="Por sus contribuciones e inspiración dentro de la franquicia" data-en="For his contributions and inspiration within the franchise">Por sus contribuciones e inspiración dentro de la franquicia</span>
         </div>
         <div class="credits-item">
           <strong>Vebills (DeviantArt)</strong>
-          <span>Su arte inspiró el diseño del personaje Citara</span>
+          <span data-es="Su arte inspiró el diseño del personaje Citara" data-en="Their art inspired the design of the character Citara">Su arte inspiró el diseño del personaje Citara</span>
         </div>
       </div>
       <div class="disclaimer">
-        <strong style="color:var(--muted);">Aviso Legal:</strong><br/>
-        Dragon Ball y todos sus personajes son propiedad de Akira Toriyama y Shueisha. Dragon Ball UAN es una obra de fans sin fines comerciales, creada para rendir homenaje al manga original.
+        <strong style="color:var(--muted);" data-es="Aviso Legal:" data-en="Legal Notice:">Aviso Legal:</strong><br/>
+        <span data-es="Dragon Ball y todos sus personajes son propiedad de Akira Toriyama y Shueisha. Dragon Ball UAN es una obra de fans sin fines comerciales, creada para rendir homenaje al manga original." data-en="Dragon Ball and all its characters are the property of Akira Toriyama and Shueisha. Dragon Ball UAN is a non-commercial fan work created to pay tribute to the original manga.">Dragon Ball y todos sus personajes son propiedad de Akira Toriyama y Shueisha. Dragon Ball UAN es una obra de fans sin fines comerciales, creada para rendir homenaje al manga original.</span>
       </div>
     </div>
   </section>
@@ -612,22 +626,22 @@
   <div class="fullscreen-overlay" id="fs-overlay">
     <button id="fs-mobile-close" style="display:none;position:fixed;top:12px;right:12px;z-index:100002;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:1.4rem;width:44px;height:44px;border-radius:50%;cursor:pointer;line-height:1;transition:opacity 0.3s;opacity:0;pointer-events:none;">&#x2715;</button>
     <div class="fs-top-bar" id="fs-top-bar">
-      <span style="font-family:'Bangers',cursive;letter-spacing:2px;color:var(--yellow);font-size:1rem;">CAP. 01 · LOS BUENOS Y LOS MALOS</span>
+      <span style="font-family:'Bangers',cursive;letter-spacing:2px;color:var(--yellow);font-size:1rem;" id="fs-title" data-es="CAP. 01 · LOS BUENOS Y LOS MALOS" data-en="CH. 01 · THE GOOD AND THE BAD">CAP. 01 · LOS BUENOS Y LOS MALOS</span>
       <button class="fs-close" id="fs-close-btn">&#x2715;</button>
     </div>
     <div class="fs-page-wrap" id="fs-page-wrap">
       <div class="fs-page-inner" id="fs-page-inner"></div>
     </div>
     <div class="fs-bottom-bar" id="fs-bottom-bar">
-      <button class="fs-btn" id="fs-prev">&#9664; ANT</button>
-      <span class="fs-counter" id="fs-counter">01 / 43</span>
-      <button class="fs-btn" id="fs-next">SIG &#9654;</button>
+      <button class="fs-btn" id="fs-prev" data-es="&#9664; ANT" data-en="&#9664; PREV">&#9664; ANT</button>
+      <span class="fs-counter" id="fs-counter">01 / 16</span>
+      <button class="fs-btn" id="fs-next" data-es="SIG &#9654;" data-en="NEXT &#9654;">SIG &#9654;</button>
     </div>
   </div>
 </main>
 
 <footer>
-  Dragon Ball UAN &nbsp;·&nbsp; Fan Manga por <span>Quadralien</span> &nbsp;·&nbsp; Dragon Ball © Akira Toriyama / Shueisha
+  <span data-es="Dragon Ball UAN &nbsp;·&nbsp; Fan Manga por" data-en="Dragon Ball UAN &nbsp;·&nbsp; Fan Manga by">Dragon Ball UAN &nbsp;·&nbsp; Fan Manga por</span> <span style="color:var(--blue-light);">Quadralien</span> &nbsp;·&nbsp; Dragon Ball © Akira Toriyama / Shueisha
 </footer>
 
 <script>
@@ -690,7 +704,7 @@ var currentPage = {};
 var fsActive = false;
 var fsChNum = 1;
 var fsPage = 1;
-var fsTotal = 43;
+var fsTotal = 16;
 
 document.getElementById('ch1-header').addEventListener('click', function() {
   openChapter(1);
@@ -727,58 +741,55 @@ function openChapter(num) {
   }
 }
 
+var currentLang = localStorage.getItem('dbu_lang') || 'es';
+
 var pageUrls = {
-  1: [
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778686708/Pagina_00_cgkztb.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632789/Pagina_01_tsawuu.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632789/Pagina_02_r8ie4l.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632793/Pagina_03_gnu3ol.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632804/Pagina_04_aez5nj.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632806/Pagina_05_dc0hq2.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632806/Pagina_06_ne5rdn.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632805/Pagina_07_oyft1c.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632802/Pagina_08_keatuu.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632805/Pagina_09_r2rs1o.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632817/pagina_10_yh8e5l.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632808/pagina_11_gukvgv.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632811/pagina_12_l8pqno.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632815/pagina_13_ovgr1r.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632820/pagina_14_ymsspk.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632817/pagina_15_paezhr.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632813/pagina_16_b1rkec.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632816/pagina_17_nzavqj.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632818/pagina_18_doymsf.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632822/pagina_19_vbqeiw.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632821/pagina_20_pdmopx.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632822/pagina_21_j6dzo7.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632827/pagina_22_j424l2.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632821/pagina_23_etwew9.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632825/pagina_24_irvzi5.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632827/pagina_25_nopkqy.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632829/pagina_26_fee4xk.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632828/pagina_27_w6gjtz.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632835/pagina_28_xzcob0.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632831/pagina_29_bz6ibk.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632834/pagina_30_oxxkvb.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632836/pagina_31_hxoats.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632835/pagina_32_q3xe8d.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632838/pagina_33_v80i4d.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632839/pagina_34_lfyww5.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778681558/pagina_35_ep79hf.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632843/pagina_36_ucixht.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632847/pagina_37_k2syqy.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632845/pagina_38_asjimf.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778681569/pagina_39_solwph.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778681590/pagina_40_i3tdit.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778681602/pagina_41_qahbbd.png",
-    "https://res.cloudinary.com/dvxu6tlk4/image/upload/w_1415,h_2000,c_scale/v1778632845/pagina_42_cx38c2.png"
-  ]
+  es: {
+    1: [
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715811/01_qzw5lp.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715874/02_uj8ngo.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715811/03_pairvw.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715837/04_xel2ay.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715903/05_jham7g.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715832/06_uqzug9.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715867/07_mipkn7.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715860/08_oa9znx.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715850/09_zlbfaq.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715869/10_pdj73f.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715865/11_lxyr8c.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715904/12_gntlig.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715880/13_stwmya.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715900/14_zvjhpx.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715906/15_sfzlql.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715900/16_vzm9wz.png"
+    ]
+  },
+  en: {
+    1: [
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715943/01_vufon9.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715964/02_ec5jgy.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716038/03_qfjaej.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715964/04_g1z5me.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715969/05_rj7mbn.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716030/06_dazc7g.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715959/07_xaziaq.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715976/08_xltmoq.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716034/09_lz9sua.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716022/10_w6pxil.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716012/11_x9cb9r.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715999/12_lloskx.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716011/13_bbks76.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716022/14_ezl9w7.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716030/15_jrwhef.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716032/16_mni8tg.png"
+    ]
+  }
 };
 
 var imageCache = {};
 
 function preloadPage(chNum, pageNum) {
-  var urls = pageUrls[chNum];
+  var urls = pageUrls[currentLang][chNum];
   if (!urls || pageNum < 1 || pageNum > urls.length) return;
   var src = urls[pageNum - 1];
   if (!src || imageCache[src]) return;
@@ -794,7 +805,7 @@ function preloadInitial(chNum) {
 function renderPage(chNum, pageNum) {
   currentPage[chNum] = pageNum;
   var total = fsTotal;
-  var urls = pageUrls[chNum];
+  var urls = pageUrls[currentLang][chNum];
   var display = document.getElementById('page-display-' + chNum);
   var counter = document.getElementById('counter-' + chNum);
   var prev = document.getElementById('prev-' + chNum);
@@ -924,7 +935,7 @@ document.addEventListener('webkitfullscreenchange', function() {
 
 function fsRenderPage(pageNum, direction) {
   fsPage = pageNum;
-  var urls = pageUrls[fsChNum];
+  var urls = pageUrls[currentLang][fsChNum];
   var src = urls[pageNum - 1];
   var inner = document.getElementById('fs-page-inner');
   var counter = document.getElementById('fs-counter');
@@ -1060,36 +1071,126 @@ function initFsSwipe() {
 
 // ===== FAQ =====
 var faqData = [
-  {q:"¿Qué es Dragon Ball UAN?", a:"Dragon Ball UAN (Universal Anthologies) es un fan manga que continúa la historia del manga original de Dragon Ball escrito por Akira Toriyama."},
-  {q:"¿Qué materiales son considerados canon dentro de esta obra?", a:"La historia toma únicamente como base el manga original de Dragon Ball. No se tendrán en cuenta elementos del relleno de los animes, películas, guías, entrevistas ni mangas complementarios."},
-  {q:"¿Dragon Ball Super y Dragon Ball GT forman parte de esta continuidad?", a:"No. Los eventos de Dragon Ball Super y Dragon Ball GT no forman parte de la continuidad de Dragon Ball UAN."},
-  {q:"¿La obra intenta reemplazar otros materiales oficiales o fan works?", a:"No. Dragon Ball UAN no pretende reemplazar ni superar otras obras, sino explorar un camino alternativo que respete el material original y le rinda homenaje."},
-  {q:"¿Habrá referencias a otros materiales de Dragon Ball?", a:"Sí. Habrá referencias, homenajes e inspiraciones tomadas de distintos materiales relacionados con Dragon Ball y otras obras de Akira Toriyama."},
-  {q:"¿Habrá referencias a trabajos de fans?", a:"Sí. La obra incluirá homenajes e inspiraciones tomadas de diseños e ideas de fans. Siempre que sea posible, se darán los créditos correspondientes."},
-  {q:"¿Se utiliza inteligencia artificial en el proyecto?", a:"Sí. Hay una gran cantidad de IA involucrada en la producción del manga. Sin embargo, también hay mucho trabajo manual para corregir, redibujar y pulir las inconsistencias de la IA."},
-  {q:"¿Cada cuánto tiempo saldrán nuevos capítulos?", a:"La intención es publicar un capítulo por mes, siempre que las posibilidades y el tiempo disponible lo permitan."},
-  {q:"¿Cuántas páginas tendrá cada capítulo?", a:"La cantidad de páginas puede variar según las necesidades de cada entrega y el tiempo de producción."},
-  {q:"¿Dónde se publicarán los nuevos capítulos?", a:"Los capítulos serán publicados a través del blog oficial de Dragon Ball UAN y sus redes asociadas."},
-  {q:"¿El proyecto tiene fines comerciales?", a:"No. Dragon Ball UAN es un proyecto realizado por fans y sin fines comerciales."},
-  {q:"¿Quién es el autor original de Dragon Ball?", a:"Dragon Ball fue creado por Akira Toriyama, a quien esta obra busca homenajear y respetar constantemente."}
+  {q:"¿Qué es Dragon Ball UAN?", a:"Dragon Ball UAN (Universal Anthologies) es un fan manga que continúa la historia del manga original de Dragon Ball escrito por Akira Toriyama.",
+   qEn:"What is Dragon Ball UAN?", aEn:"Dragon Ball UAN (Universal Anthologies) is a fan manga that continues the story of Akira Toriyama's original Dragon Ball manga."},
+  {q:"¿Qué materiales son considerados canon dentro de esta obra?", a:"La historia toma únicamente como base el manga original de Dragon Ball. No se tendrán en cuenta elementos del relleno de los animes, películas, guías, entrevistas ni mangas complementarios.",
+   qEn:"What material is considered canon for this work?", aEn:"The story is based solely on the original Dragon Ball manga. Anime filler, movies, guidebooks, interviews, and companion manga are not taken into account."},
+  {q:"¿Dragon Ball Super y Dragon Ball GT forman parte de esta continuidad?", a:"No. Los eventos de Dragon Ball Super y Dragon Ball GT no forman parte de la continuidad de Dragon Ball UAN.",
+   qEn:"Are Dragon Ball Super and Dragon Ball GT part of this continuity?", aEn:"No. The events of Dragon Ball Super and Dragon Ball GT are not part of Dragon Ball UAN's continuity."},
+  {q:"¿La obra intenta reemplazar otros materiales oficiales o fan works?", a:"No. Dragon Ball UAN no pretende reemplazar ni superar otras obras, sino explorar un camino alternativo que respete el material original y le rinda homenaje.",
+   qEn:"Does this work try to replace other official material or fan works?", aEn:"No. Dragon Ball UAN doesn't intend to replace or surpass other works, but to explore an alternative path that respects and pays tribute to the original material."},
+  {q:"¿Habrá referencias a otros materiales de Dragon Ball?", a:"Sí. Habrá referencias, homenajes e inspiraciones tomadas de distintos materiales relacionados con Dragon Ball y otras obras de Akira Toriyama.",
+   qEn:"Will there be references to other Dragon Ball material?", aEn:"Yes. There will be references, tributes, and inspiration drawn from different material related to Dragon Ball and other works by Akira Toriyama."},
+  {q:"¿Habrá referencias a trabajos de fans?", a:"Sí. La obra incluirá homenajes e inspiraciones tomadas de diseños e ideas de fans. Siempre que sea posible, se darán los créditos correspondientes.",
+   qEn:"Will there be references to fan works?", aEn:"Yes. The work will include tributes and inspiration drawn from fan designs and ideas. Credit will be given whenever possible."},
+  {q:"¿Se utiliza inteligencia artificial en el proyecto?", a:"Sí. Hay una gran cantidad de IA involucrada en la producción del manga. Sin embargo, también hay mucho trabajo manual para corregir, redibujar y pulir las inconsistencias de la IA.",
+   qEn:"Is artificial intelligence used in the project?", aEn:"Yes. A significant amount of AI is involved in producing the manga. However, there is also a lot of manual work to fix, redraw, and polish the AI's inconsistencies."},
+  {q:"¿Cada cuánto tiempo saldrán nuevos capítulos?", a:"La intención es publicar un capítulo por mes, siempre que las posibilidades y el tiempo disponible lo permitan.",
+   qEn:"How often will new chapters come out?", aEn:"The goal is to publish one chapter per month, whenever time and circumstances allow it."},
+  {q:"¿Cuántas páginas tendrá cada capítulo?", a:"La cantidad de páginas puede variar según las necesidades de cada entrega y el tiempo de producción.",
+   qEn:"How many pages will each chapter have?", aEn:"The page count may vary depending on the needs of each release and production time."},
+  {q:"¿Dónde se publicarán los nuevos capítulos?", a:"Los capítulos serán publicados a través del blog oficial de Dragon Ball UAN y sus redes asociadas.",
+   qEn:"Where will new chapters be published?", aEn:"Chapters will be published through the official Dragon Ball UAN blog and its associated social media."},
+  {q:"¿El proyecto tiene fines comerciales?", a:"No. Dragon Ball UAN es un proyecto realizado por fans y sin fines comerciales.",
+   qEn:"Does the project have commercial purposes?", aEn:"No. Dragon Ball UAN is a non-commercial, fan-made project."},
+  {q:"¿Quién es el autor original de Dragon Ball?", a:"Dragon Ball fue creado por Akira Toriyama, a quien esta obra busca homenajear y respetar constantemente.",
+   qEn:"Who is the original author of Dragon Ball?", aEn:"Dragon Ball was created by Akira Toriyama, whom this work constantly seeks to honor and respect."}
 ];
 
 var faqList = document.getElementById('faq-list');
-faqData.forEach(function(f, i) {
-  var div = document.createElement('div');
-  div.className = 'faq-item';
-  div.id = 'faq-' + i;
-  div.innerHTML = '<div class="faq-question"><span>' + f.q + '</span><span class="faq-icon">+</span></div><div class="faq-answer">' + f.a + '</div>';
-  div.querySelector('.faq-question').addEventListener('click', function() { div.classList.toggle('open'); });
-  faqList.appendChild(div);
+
+function renderFaq(lang) {
+  faqList.innerHTML = '';
+  faqData.forEach(function(f, i) {
+    var qText = lang === 'en' ? f.qEn : f.q;
+    var aText = lang === 'en' ? f.aEn : f.a;
+    var div = document.createElement('div');
+    div.className = 'faq-item';
+    div.id = 'faq-' + i;
+    div.innerHTML = '<div class="faq-question"><span>' + qText + '</span><span class="faq-icon">+</span></div><div class="faq-answer">' + aText + '</div>';
+    div.querySelector('.faq-question').addEventListener('click', function() { div.classList.toggle('open'); });
+    faqList.appendChild(div);
+  });
+}
+
+renderFaq(currentLang);
+
+// ===== LANGUAGE SWITCH =====
+function applyStaticTranslations(lang) {
+  document.querySelectorAll('[data-' + lang + ']').forEach(function(el) {
+    el.innerHTML = el.getAttribute('data-' + lang);
+  });
+  document.querySelectorAll('[data-' + lang + '-placeholder]').forEach(function(el) {
+    el.setAttribute('placeholder', el.getAttribute('data-' + lang + '-placeholder'));
+  });
+  document.documentElement.lang = lang;
+  var toggleBtn = document.getElementById('lang-toggle');
+  if (toggleBtn) toggleBtn.textContent = lang === 'es' ? 'EN' : 'ES';
+}
+
+function setLanguage(lang, isInitial) {
+  currentLang = lang;
+  localStorage.setItem('dbu_lang', lang);
+  applyStaticTranslations(lang);
+  renderFaq(lang);
+  if (typeof refreshDynamicText === 'function') refreshDynamicText();
+  // Reset to page 1 of the new language set and re-render if the chapter is open
+  if (!isInitial) {
+    imageCache = {};
+    currentPage[1] = 1;
+    var pagesEl = document.getElementById('pages-1');
+    if (pagesEl && pagesEl.classList.contains('open')) {
+      preloadInitial(1);
+      renderPage(1, 1);
+    }
+    if (fsActive) {
+      preloadInitial(fsChNum);
+      fsRenderPage(1, null);
+    }
+  }
+}
+
+document.getElementById('lang-toggle').addEventListener('click', function() {
+  setLanguage(currentLang === 'es' ? 'en' : 'es');
 });
 
+// Apply stored language preference on load (content starts in Spanish by default)
+if (currentLang === 'en') {
+  setLanguage('en', true);
+}
 
 </script>
 <script>
 function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
+
+var i18nDynamic = {
+  es: {
+    beFirstVote: 'Se el primero en votar.',
+    vote: 'voto',
+    votes: 'votos',
+    alreadyVoted: '¡Ya votaste!',
+    thanksVoting: '¡Gracias por votar!',
+    thanksCommenting: '¡GRACIAS POR COMENTAR!',
+    noComments: 'No hay comentarios todavia. ¡Se el primero!',
+    defaultAuthor: 'Saiyajin Anonimo'
+  },
+  en: {
+    beFirstVote: 'Be the first to vote.',
+    vote: 'vote',
+    votes: 'votes',
+    alreadyVoted: 'Already voted!',
+    thanksVoting: 'Thanks for voting!',
+    thanksCommenting: 'THANKS FOR COMMENTING!',
+    noComments: 'No comments yet. Be the first!',
+    defaultAuthor: 'Anonymous Saiyan'
+  }
+};
+
+var votesCache = {};
+var commentsCache = {};
+var alreadyVotedCache = {};
 
 var FB_CONFIG = {
   apiKey: "AIzaSyCdLi-sui9ydYjNnNv-wjmPhKEDuHy-grc",
@@ -1115,10 +1216,23 @@ loadScript('https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js', f
     var db = firebase.database();
 
     // ===== RATINGS =====
+    function renderRatingResult(chNum) {
+      var result = document.getElementById('rating-result-' + chNum);
+      if (!result) return;
+      var t = i18nDynamic[currentLang];
+      var votes = votesCache[chNum] || [];
+      if (votes.length === 0) {
+        result.innerHTML = t.beFirstVote;
+      } else {
+        var avg = votes.reduce(function(a,b){return a+b;},0) / votes.length;
+        var word = votes.length === 1 ? t.vote : t.votes;
+        result.innerHTML = '<strong>' + (votes.length >= 3 ? avg.toFixed(1) : avg.toFixed(0)) + ' / 5</strong> &nbsp;&#183;&nbsp; ' + votes.length + ' ' + word;
+      }
+    }
+
     function initRating(chNum) {
       var stars  = document.querySelectorAll('#stars-' + chNum + ' .star');
       var btn    = document.getElementById('btn-rate-' + chNum);
-      var result = document.getElementById('rating-result-' + chNum);
       if (!btn) return;
       var selectedVal = 0;
       var ratingsRef = db.ref('ratings/cap' + chNum);
@@ -1126,17 +1240,14 @@ loadScript('https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js', f
       ratingsRef.on('value', function(snap) {
         var votes = [];
         snap.forEach(function(c) { votes.push(c.val()); });
-        if (votes.length === 0) {
-          result.innerHTML = 'Se el primero en votar.';
-        } else {
-          var avg = votes.reduce(function(a,b){return a+b;},0) / votes.length;
-          result.innerHTML = '<strong>' + (votes.length >= 3 ? avg.toFixed(1) : avg.toFixed(0)) + ' / 5</strong> &nbsp;&#183;&nbsp; ' + votes.length + (votes.length === 1 ? ' voto' : ' votos');
-        }
+        votesCache[chNum] = votes;
+        renderRatingResult(chNum);
       });
 
       var alreadyVoted = localStorage.getItem('dbu_voted_ch' + chNum);
       if (alreadyVoted) {
-        btn.textContent = 'Ya votaste!';
+        alreadyVotedCache[chNum] = true;
+        btn.textContent = i18nDynamic[currentLang].alreadyVoted;
         btn.disabled = true;
         stars.forEach(function(s) {
           if (parseInt(s.getAttribute('data-val')) <= parseInt(alreadyVoted)) s.classList.add('selected');
@@ -1164,13 +1275,34 @@ loadScript('https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js', f
         if (!selectedVal) return;
         ratingsRef.child('v_' + Date.now()).set(selectedVal);
         localStorage.setItem('dbu_voted_ch' + chNum, selectedVal);
-        btn.textContent = 'Gracias por votar!';
+        alreadyVotedCache[chNum] = true;
+        btn.textContent = i18nDynamic[currentLang].thanksVoting;
         btn.disabled = true;
         stars.forEach(function(s) { s.style.cursor = 'default'; });
       });
     }
 
     // ===== COMMENTS =====
+    function renderComments(chNum) {
+      var listEl = document.getElementById('comments-list-' + chNum);
+      if (!listEl) return;
+      var items = commentsCache[chNum] || [];
+      if (items.length === 0) {
+        listEl.innerHTML = '<div class="no-comments">' + i18nDynamic[currentLang].noComments + '</div>';
+        return;
+      }
+      listEl.innerHTML = items.map(function(c) {
+        var d = new Date(c.val.ts);
+        var date = d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}) + ' ' +
+                   d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+        return '<div class="comment-item" data-key="' + escHtml(c.key) + '">' +
+          '<div class="comment-author">' + escHtml(c.val.author) + '</div>' +
+          '<div class="comment-text">' + escHtml(c.val.text) + '</div>' +
+          '<div class="comment-date">' + date + '</div>' +
+          '</div>';
+      }).join('');
+    }
+
     function initComments(chNum) {
       var nameInput = document.getElementById('comment-name-' + chNum);
       var textInput = document.getElementById('comment-text-' + chNum);
@@ -1193,24 +1325,12 @@ loadScript('https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js', f
         var items = [];
         snap.forEach(function(c) { items.push({key: c.key, val: c.val()}); });
         items.reverse();
-        if (items.length === 0) {
-          listEl.innerHTML = '<div class="no-comments">No hay comentarios todavia. ¡Se el primero!</div>';
-          return;
-        }
-        listEl.innerHTML = items.map(function(c) {
-          var d = new Date(c.val.ts);
-          var date = d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}) + ' ' +
-                     d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
-          return '<div class="comment-item" data-key="' + escHtml(c.key) + '">' +
-            '<div class="comment-author">' + escHtml(c.val.author) + '</div>' +
-            '<div class="comment-text">' + escHtml(c.val.text) + '</div>' +
-            '<div class="comment-date">' + date + '</div>' +
-            '</div>';
-        }).join('');
+        commentsCache[chNum] = items;
+        renderComments(chNum);
       });
 
       submitBtn.addEventListener('click', function() {
-        var author = nameInput.value.trim() || 'Saiyajin Anonimo';
+        var author = nameInput.value.trim() || i18nDynamic[currentLang].defaultAuthor;
         var text   = textInput.value.trim();
         if (!text || text.length > 280) return;
         localStorage.setItem('dbu_comment_name', author);
@@ -1220,7 +1340,7 @@ loadScript('https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js', f
         // Thank you message
         var thanks = document.createElement('div');
         thanks.style.cssText = 'font-family:Bangers,cursive;letter-spacing:2px;color:var(--yellow);font-size:1.1rem;text-align:center;padding:8px 0;animation:fadeIn 0.3s ease;';
-        thanks.textContent = '¡GRACIAS POR COMENTAR!';
+        thanks.textContent = i18nDynamic[currentLang].thanksCommenting;
         listEl.parentNode.insertBefore(thanks, listEl);
         setTimeout(function(){ if(thanks.parentNode) thanks.parentNode.removeChild(thanks); }, 3000);
       });
@@ -1229,6 +1349,17 @@ loadScript('https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js', f
     window.deleteComment = function(chNum, key) {
       db.ref('comments/cap' + chNum + '/' + key).remove();
       console.log('Deleted.');
+    };
+
+    window.refreshDynamicText = function() {
+      [1].forEach(function(chNum) {
+        renderRatingResult(chNum);
+        renderComments(chNum);
+        var btn = document.getElementById('btn-rate-' + chNum);
+        if (btn && alreadyVotedCache[chNum]) {
+          btn.textContent = i18nDynamic[currentLang].alreadyVoted;
+        }
+      });
     };
 
     initRating(1);
