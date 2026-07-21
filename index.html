@@ -491,8 +491,8 @@
       <img id="hero-cover-img" class="hero-cover-img" src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662520/Portada_ycgykm.png" alt="Dragon Ball UAN">
       <div class="hero-overlay">
         <div class="hero-tag" data-es="🆕 Última publicación" data-en="🆕 Latest release">🆕 Última publicación</div>
-        <div class="hero-title" data-es="Capítulo 1: Los Buenos y los Malos" data-en="Chapter 1: The Good Guys and the Bad Guys">Capítulo 1: Los Buenos y los Malos</div>
-        <div class="hero-desc" data-es="El primer capítulo de Dragon Ball UAN ya está disponible. Un nuevo universo que continúa la historia del manga original de Akira Toriyama." data-en="The first chapter of Dragon Ball UAN is now available. A new universe that continues the story of Akira Toriyama's original manga.">El primer capítulo de Dragon Ball UAN ya está disponible. Un nuevo universo que continúa la historia del manga original de Akira Toriyama.</div>
+        <div class="hero-title" data-es="Capítulo 2: El Regreso de Dabura" data-en="Chapter 2: Dabura's Return">Capítulo 2: El Regreso de Dabura</div>
+        <div class="hero-desc" data-es="El segundo capítulo de Dragon Ball UAN ya está disponible. La historia continúa explorando las consecuencias del deseo alterado a Porunga." data-en="The second chapter of Dragon Ball UAN is now available. The story continues to explore the consequences of the altered wish to Porunga.">El segundo capítulo de Dragon Ball UAN ya está disponible. La historia continúa explorando las consecuencias del deseo alterado a Porunga.</div>
         <a class="hero-btn" id="hero-read-btn" data-es="Leer ahora →" data-en="Read now →">Leer ahora →</a>
       </div>
     </div>
@@ -512,6 +512,15 @@
         <div class="post-card-icon">📖</div>
         <div class="post-card-body">
           <div class="post-tag" data-es="📖 Nuevo capítulo" data-en="📖 New chapter">📖 Nuevo capítulo</div>
+          <h3 data-es="Capítulo 2: El Regreso de Dabura" data-en="Chapter 2: Dabura's Return">Capítulo 2: El Regreso de Dabura</h3>
+          <p data-es="Fuerzas antiguas comienzan a despertar mientras Dabura regresa para desafiar el nuevo equilibrio del universo." data-en="Ancient forces begin to stir as Dabura returns to challenge the universe's new balance.">Fuerzas antiguas comienzan a despertar mientras Dabura regresa para desafiar el nuevo equilibrio del universo.</p>
+          <div class="post-date" data-es="Julio 2026" data-en="July 2026">Julio 2026</div>
+        </div>
+      </div>
+      <div class="post-card" data-goto="manga">
+        <div class="post-card-icon">📖</div>
+        <div class="post-card-body">
+          <div class="post-tag" data-es="📖 Capítulo anterior" data-en="📖 Previous chapter">📖 Capítulo anterior</div>
           <h3 data-es="Capítulo 1: Los Buenos y los Malos" data-en="Chapter 1: The Good Guys and the Bad Guys">Capítulo 1: Los Buenos y los Malos</h3>
           <p data-es="Tras la derrota de Majin Boo, una nueva amenaza comienza a tomar forma en las sombras del Otro Mundo." data-en="After Majin Boo's defeat, a new threat begins to take shape in the shadows of the Other World.">Tras la derrota de Majin Boo, una nueva amenaza comienza a tomar forma en las sombras del Otro Mundo.</p>
           <div class="post-date" data-es="Mayo 2025" data-en="May 2025">Mayo 2025</div>
@@ -782,7 +791,8 @@ document.querySelectorAll('.post-card[data-goto]').forEach(function(card) {
 
 document.getElementById('hero-read-btn').addEventListener('click', function() {
   goToSection('manga');
-  setTimeout(function(){ openChapter(1); }, 300);
+  var lastChapter = chapterOrder[chapterOrder.length - 1];
+  setTimeout(function(){ openChapter(lastChapter); }, 300);
 });
 
 document.getElementById('hero-cover-img').addEventListener('click', function() {
