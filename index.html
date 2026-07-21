@@ -8,7 +8,7 @@
   <meta name="keywords" content="Dragon Ball, fan manga, Dragon Ball UAN, Universal Anthologies, Akira Toriyama, manga online"/>
   <meta property="og:title" content="Dragon Ball UAN"/>
   <meta property="og:description" content="Fan manga que continúa la historia del manga original de Dragon Ball."/>
-  <meta property="og:image" content="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778686737/Portada_wbk7zb.png"/>
+  <meta property="og:image" content="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662520/Portada_ycgykm.png"/>
   <meta property="og:type" content="website"/>
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778693217/icono_kmsrhi.png"/>
   <link rel="apple-touch-icon" href="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778693217/icono_kmsrhi.png"/>
@@ -155,6 +155,20 @@
       background: linear-gradient(135deg, #050508 0%, #0d0d1f 50%, #0a0a18 100%);
       display: flex; align-items: center; justify-content: center;
       font-size: 6rem; color: rgba(30,58,138,0.25);
+    }
+    .hero-cover-img {
+      width: 100%; height: 480px; max-height: 480px;
+      object-fit: cover; display: block; opacity: 0.9;
+      cursor: pointer;
+      animation: heroCoverPan 16s ease-in-out infinite;
+    }
+    @keyframes heroCoverPan {
+      0%   { object-position: center 0%; }
+      45%  { object-position: center 50%; }
+      50%  { object-position: center 50%; }
+      58%  { object-position: center 100%; }
+      95%  { object-position: center 100%; }
+      100% { object-position: center 0%; }
     }
     .hero-overlay {
       position: absolute; bottom: 0; left: 0; right: 0;
@@ -474,7 +488,7 @@
   <!-- INICIO -->
   <section id="inicio" class="section active">
     <div class="hero-banner">
-      <img src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1778686737/Portada_wbk7zb.png" alt="Dragon Ball UAN - Capítulo 1" style="width:100%;max-height:480px;object-fit:cover;object-position:top;display:block;opacity:0.9;">
+      <img id="hero-cover-img" class="hero-cover-img" src="https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662520/Portada_ycgykm.png" alt="Dragon Ball UAN">
       <div class="hero-overlay">
         <div class="hero-tag" data-es="🆕 Última publicación" data-en="🆕 Latest release">🆕 Última publicación</div>
         <div class="hero-title" data-es="Capítulo 1: Los Buenos y los Malos" data-en="Chapter 1: The Good Guys and the Bad Guys">Capítulo 1: Los Buenos y los Malos</div>
@@ -769,6 +783,10 @@ document.querySelectorAll('.post-card[data-goto]').forEach(function(card) {
 document.getElementById('hero-read-btn').addEventListener('click', function() {
   goToSection('manga');
   setTimeout(function(){ openChapter(1); }, 300);
+});
+
+document.getElementById('hero-cover-img').addEventListener('click', function() {
+  goToSection('manga');
 });
 
 // ===== MANGA VIEWER =====
