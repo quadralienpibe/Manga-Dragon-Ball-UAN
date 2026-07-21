@@ -431,6 +431,24 @@
       transition:all 0.2s;
     }
     .lang-btn:hover { background:rgba(250,204,21,0.15); border-color:var(--yellow); }
+
+    /* NEXT CHAPTER */
+    .next-chapter-wrap { text-align:center; margin-top:10px; }
+    .btn-next-chapter {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+      color: var(--yellow); font-family:'Bangers',cursive;
+      letter-spacing:2px; font-size:0.95rem;
+      border:1px solid rgba(250,204,21,0.25);
+      padding:9px 26px; border-radius:var(--radius);
+      cursor:pointer; transition:all 0.2s;
+    }
+    .btn-next-chapter:hover { background: linear-gradient(135deg,var(--blue-light) 0%,var(--yellow) 100%); color:var(--dark); }
+    #fs-next-chapter {
+      position:fixed; bottom:76px; left:50%; transform:translateX(-50%);
+      z-index:100002; display:none;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+      color: var(--yellow); border-color:rgba(250,204,21,0.4);
+    }
   </style>
 </head>
 <body>
@@ -518,6 +536,9 @@
           <span class="page-counter" id="counter-1">01 / 16</span>
           <button id="next-1" data-es="SIGUIENTE ▶" data-en="NEXT ▶">SIGUIENTE ▶</button>
         </div>
+        <div class="next-chapter-wrap">
+          <button class="btn-next-chapter" id="next-chapter-1" style="display:none;" data-es="Siguiente capítulo ▶" data-en="Next chapter ▶">Siguiente capítulo ▶</button>
+        </div>
         <div class="rating-box">
           <h4 data-es="⭐ ¿QUÉ TE PARECIÓ ESTE CAPÍTULO?" data-en="⭐ WHAT DID YOU THINK OF THIS CHAPTER?">⭐ ¿QUÉ TE PARECIÓ ESTE CAPÍTULO?</h4>
           <div class="stars" id="stars-1">
@@ -542,11 +563,61 @@
         </div>
       </div>
     </div>
+    <div class="chapter-entry">
+      <div class="chapter-header" id="ch2-header">
+        <div class="chapter-info">
+          <span class="chapter-num" data-es="CAP. 02" data-en="CH. 02">CAP. 02</span>
+          <div class="chapter-meta">
+            <h3 data-es="El Regreso de Dabura" data-en="Dabura's Return">El Regreso de Dabura</h3>
+            <span data-es="16 páginas · Julio 2026" data-en="16 pages · July 2026">16 páginas · Julio 2026</span>
+          </div>
+        </div>
+        <button class="btn-read" id="ch2-btn" data-es="LEER ▾" data-en="READ ▾">LEER ▾</button><button class="btn-fullscreen" id="ch2-fs-btn" data-es="&#x26F6; Pantalla completa" data-en="&#x26F6; Fullscreen">&#x26F6; Pantalla completa</button>
+      </div>
+      <div class="manga-pages" id="pages-2">
+        <div id="page-display-2" style="text-align:center;"></div>
+        <div class="manga-nav">
+          <button id="prev-2" data-es="◀ ANTERIOR" data-en="◀ PREVIOUS">◀ ANTERIOR</button>
+          <span class="page-counter" id="counter-2">01 / 16</span>
+          <button id="next-2" data-es="SIGUIENTE ▶" data-en="NEXT ▶">SIGUIENTE ▶</button>
+        </div>
+        <div class="next-chapter-wrap">
+          <button class="btn-next-chapter" id="next-chapter-2" style="display:none;" data-es="Siguiente capítulo ▶" data-en="Next chapter ▶">Siguiente capítulo ▶</button>
+        </div>
+        <div class="rating-box">
+          <h4 data-es="⭐ ¿QUÉ TE PARECIÓ ESTE CAPÍTULO?" data-en="⭐ WHAT DID YOU THINK OF THIS CHAPTER?">⭐ ¿QUÉ TE PARECIÓ ESTE CAPÍTULO?</h4>
+          <div class="stars" id="stars-2">
+            <span class="star" data-val="1">★</span>
+            <span class="star" data-val="2">★</span>
+            <span class="star" data-val="3">★</span>
+            <span class="star" data-val="4">★</span>
+            <span class="star" data-val="5">★</span>
+          </div>
+          <div class="rating-result" id="rating-result-2"></div>
+          <button class="btn-rate" id="btn-rate-2" disabled data-es="Votar" data-en="Vote">Votar</button>
+        </div>
+        <div class="comments-box">
+          <h4 data-es="💬 COMENTARIOS" data-en="💬 COMMENTS">💬 COMENTARIOS</h4>
+          <div class="comment-form">
+            <input type="text" id="comment-name-2" placeholder="Tu nombre (por defecto: Saiyajin Anonimo)" data-es-placeholder="Tu nombre (por defecto: Saiyajin Anonimo)" data-en-placeholder="Your name (default: Anonymous Saiyan)" maxlength="30"/>
+            <textarea id="comment-text-2" placeholder="¿Qué te pareció el capítulo? (máx. 280 caracteres)" data-es-placeholder="¿Qué te pareció el capítulo? (máx. 280 caracteres)" data-en-placeholder="What did you think of the chapter? (max. 280 characters)" maxlength="280"></textarea>
+            <div class="comment-char-count" id="comment-count-2">0 / 280</div>
+            <button class="comment-submit" id="comment-submit-2" data-es="Comentar" data-en="Comment">Comentar</button>
+          </div>
+          <div class="comments-list" id="comments-list-2"></div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- NOVEDADES -->
   <section id="novedades" class="section">
     <h2 class="section-title" data-es="📢 Novedades" data-en="📢 News">📢 Novedades</h2>
+    <div class="news-item">
+      <h3 data-es="¡Capítulo 2 disponible: &quot;El Regreso de Dabura&quot;!" data-en="Chapter 2 available: &quot;Dabura's Return&quot;!">¡Capítulo 2 disponible: "El Regreso de Dabura"!</h3>
+      <p data-es="El segundo capítulo de Dragon Ball UAN ya está publicado. La historia continúa explorando las consecuencias del deseo alterado a Porunga, mientras nuevas fuerzas comienzan a manifestarse. Podés leerlo completo en la sección &quot;Leer Manga&quot;." data-en="The second chapter of Dragon Ball UAN is now published. The story continues to explore the consequences of the altered wish to Porunga, as new forces begin to emerge. You can read it in full in the &quot;Read Manga&quot; section.">El segundo capítulo de Dragon Ball UAN ya está publicado. La historia continúa explorando las consecuencias del deseo alterado a Porunga, mientras nuevas fuerzas comienzan a manifestarse. Podés leerlo completo en la sección "Leer Manga".</p>
+      <div class="news-date" data-es="Julio 2026" data-en="July 2026">Julio 2026</div>
+    </div>
     <div class="news-item">
       <h3 data-es="¡Capítulo 1 disponible: &quot;Los Buenos y los Malos&quot;!" data-en="Chapter 1 available: &quot;The Good Guys and the Bad Guys&quot;!">¡Capítulo 1 disponible: "Los Buenos y los Malos"!</h3>
       <p data-es="El primer capítulo de Dragon Ball UAN ya está publicado. La historia comienza justo después del final del manga original, explorando qué ocurre con los personajes y las fuerzas del más allá. Podés leerlo completo en la sección &quot;Leer Manga&quot;." data-en="The first chapter of Dragon Ball UAN is now published. The story begins right after the ending of the original manga, exploring what happens to the characters and the forces of the afterlife. You can read it in full in the &quot;Read Manga&quot; section.">El primer capítulo de Dragon Ball UAN ya está publicado. La historia comienza justo después del final del manga original, explorando qué ocurre con los personajes y las fuerzas del más allá. Podés leerlo completo en la sección "Leer Manga".</p>
@@ -637,6 +708,7 @@
       <span class="fs-counter" id="fs-counter">01 / 16</span>
       <button class="fs-btn" id="fs-next" data-es="SIG &#9654;" data-en="NEXT &#9654;">SIG &#9654;</button>
     </div>
+    <button class="fs-btn" id="fs-next-chapter" data-es="Siguiente capítulo ▶" data-en="Next chapter ▶">Siguiente capítulo ▶</button>
   </div>
 </main>
 
@@ -700,29 +772,52 @@ document.getElementById('hero-read-btn').addEventListener('click', function() {
 });
 
 // ===== MANGA VIEWER =====
+var currentLang = localStorage.getItem('dbu_lang') || 'es';
 var currentPage = {};
 var fsActive = false;
 var fsChNum = 1;
 var fsPage = 1;
 var fsTotal = 16;
 
-document.getElementById('ch1-header').addEventListener('click', function() {
-  openChapter(1);
-});
+var chapterOrder = [1, 2];
+var chapterPages = { 1: 16, 2: 16 };
+var chapterTitles = {
+  es: { 1: 'CAP. 01 · LOS BUENOS Y LOS MALOS', 2: 'CAP. 02 · EL REGRESO DE DABURA' },
+  en: { 1: 'CH. 01 · THE GOOD GUYS AND THE BAD GUYS', 2: "CH. 02 · DABURA'S RETURN" }
+};
 
-document.getElementById('ch1-fs-btn').addEventListener('click', function(e) {
-  e.stopPropagation();
-  // Make sure chapter is open first
-  var pages = document.getElementById('pages-1');
-  if (!pages.classList.contains('open')) {
-    pages.classList.add('open');
-    document.getElementById('ch1-btn').textContent = 'CERRAR ▴';
-    if (!currentPage[1]) currentPage[1] = 1;
-    preloadInitial(1);
-    renderPage(1, currentPage[1]);
-    initSwipe(1);
+function getNextChapter(chNum) {
+  var idx = chapterOrder.indexOf(chNum);
+  if (idx === -1 || idx === chapterOrder.length - 1) return null;
+  return chapterOrder[idx + 1];
+}
+
+function readBtnLabel(lang, closed) {
+  var labels = { es: { open: 'LEER ▾', close: 'CERRAR ▴' }, en: { open: 'READ ▾', close: 'CLOSE ▴' } };
+  var l = labels[lang] || labels.es;
+  return closed ? l.close : l.open;
+}
+
+chapterOrder.forEach(function(chNum) {
+  var header = document.getElementById('ch' + chNum + '-header');
+  if (header) header.addEventListener('click', function() { openChapter(chNum); });
+
+  var fsBtn = document.getElementById('ch' + chNum + '-fs-btn');
+  if (fsBtn) {
+    fsBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var pages = document.getElementById('pages-' + chNum);
+      if (!pages.classList.contains('open')) {
+        pages.classList.add('open');
+        document.getElementById('ch' + chNum + '-btn').textContent = readBtnLabel(currentLang, true);
+        if (!currentPage[chNum]) currentPage[chNum] = 1;
+        preloadInitial(chNum);
+        renderPage(chNum, currentPage[chNum]);
+        initSwipe(chNum);
+      }
+      openFullscreen(chNum);
+    });
   }
-  openFullscreen(1);
 });
 
 function openChapter(num) {
@@ -730,10 +825,10 @@ function openChapter(num) {
   var isOpen = pages.classList.contains('open');
   if (isOpen) {
     pages.classList.remove('open');
-    document.getElementById('ch' + num + '-btn').textContent = 'LEER ▾';
+    document.getElementById('ch' + num + '-btn').textContent = readBtnLabel(currentLang, false);
   } else {
     pages.classList.add('open');
-    document.getElementById('ch' + num + '-btn').textContent = 'CERRAR ▴';
+    document.getElementById('ch' + num + '-btn').textContent = readBtnLabel(currentLang, true);
     if (!currentPage[num]) currentPage[num] = 1;
     preloadInitial(num);
     renderPage(num, currentPage[num]);
@@ -741,7 +836,40 @@ function openChapter(num) {
   }
 }
 
-var currentLang = localStorage.getItem('dbu_lang') || 'es';
+function openNextChapter(fromChNum, fullscreen) {
+  var next = getNextChapter(fromChNum);
+  if (!next) return;
+  currentPage[next] = 1;
+  if (fullscreen) {
+    var pages = document.getElementById('pages-' + next);
+    if (pages && !pages.classList.contains('open')) {
+      pages.classList.add('open');
+      document.getElementById('ch' + next + '-btn').textContent = readBtnLabel(currentLang, true);
+      preloadInitial(next);
+      renderPage(next, 1);
+      initSwipe(next);
+    }
+    openFullscreen(next);
+  } else {
+    var curPages = document.getElementById('pages-' + fromChNum);
+    if (curPages) {
+      curPages.classList.remove('open');
+      document.getElementById('ch' + fromChNum + '-btn').textContent = readBtnLabel(currentLang, false);
+    }
+    var nextPages = document.getElementById('pages-' + next);
+    nextPages.classList.add('open');
+    document.getElementById('ch' + next + '-btn').textContent = readBtnLabel(currentLang, true);
+    preloadInitial(next);
+    renderPage(next, 1);
+    initSwipe(next);
+    document.getElementById('ch' + next + '-header').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
+chapterOrder.forEach(function(chNum) {
+  var btn = document.getElementById('next-chapter-' + chNum);
+  if (btn) btn.addEventListener('click', function() { openNextChapter(chNum, false); });
+});
 
 var pageUrls = {
   es: {
@@ -762,6 +890,24 @@ var pageUrls = {
       "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715900/14_zvjhpx.png",
       "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715906/15_sfzlql.png",
       "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783715900/16_vzm9wz.png"
+    ],
+    2: [
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661984/01_gly98f.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661986/02_apdimu.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661988/03_nezdza.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661991/04_e6zrjr.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661986/05_gbzs0x.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661995/06_t10avx.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661990/07_jmabsn.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661987/08_eumr44.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661988/09_sfzs7u.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661994/10_termlh.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661997/11_qdmboy.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662001/12_spuqpo.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661995/13_bzmawp.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661995/14_fkry9i.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661998/15_yvtmzu.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784661997/16_ajrbim.png"
     ]
   },
   en: {
@@ -782,6 +928,24 @@ var pageUrls = {
       "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716022/14_ezl9w7.png",
       "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716030/15_jrwhef.png",
       "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1783716032/16_mni8tg.png"
+    ],
+    2: [
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662015/01_u0fmab.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662012/02_fn6ovu.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662011/03_offzat.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662014/04_bqgo8b.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662014/05_fzssnp.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662020/06_uin51o.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662013/07_rjnttg.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662015/08_kciaj5.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662014/09_oa38rr.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662018/10_ziejij.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662018/11_kf9yjc.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662054/12_ii47jv.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662052/13_dvnsem.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662054/14_k8xskx.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662055/15_cyz9ac.png",
+      "https://res.cloudinary.com/dvxu6tlk4/image/upload/v1784662053/16_qlpjke.png"
     ]
   }
 };
@@ -802,9 +966,16 @@ function preloadInitial(chNum) {
   for (var i = 1; i <= 5; i++) preloadPage(chNum, i);
 }
 
+function updateNextChapterButton(chNum, pageNum, total) {
+  var btn = document.getElementById('next-chapter-' + chNum);
+  if (!btn) return;
+  var hasNext = !!getNextChapter(chNum);
+  btn.style.display = (pageNum >= total && hasNext) ? 'inline-block' : 'none';
+}
+
 function renderPage(chNum, pageNum) {
   currentPage[chNum] = pageNum;
-  var total = fsTotal;
+  var total = chapterPages[chNum] || fsTotal;
   var urls = pageUrls[currentLang][chNum];
   var display = document.getElementById('page-display-' + chNum);
   var counter = document.getElementById('counter-' + chNum);
@@ -813,6 +984,7 @@ function renderPage(chNum, pageNum) {
   counter.textContent = String(pageNum).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
   prev.disabled = pageNum <= 1;
   next.disabled = pageNum >= total;
+  updateNextChapterButton(chNum, pageNum, total);
   var src = urls[pageNum - 1];
   if (!src) return;
   if (!imageCache[src] || !imageCache[src].complete) {
@@ -835,13 +1007,18 @@ function renderPage(chNum, pageNum) {
   preloadPage(chNum, pageNum - 1);
 }
 
-document.getElementById('prev-1').addEventListener('click', function() {
-  var p = (currentPage[1] || 1) - 1;
-  if (p >= 1) renderPage(1, p);
-});
-document.getElementById('next-1').addEventListener('click', function() {
-  var p = (currentPage[1] || 1) + 1;
-  if (p <= fsTotal) renderPage(1, p);
+chapterOrder.forEach(function(chNum) {
+  var prevBtn = document.getElementById('prev-' + chNum);
+  var nextBtn = document.getElementById('next-' + chNum);
+  if (prevBtn) prevBtn.addEventListener('click', function() {
+    var p = (currentPage[chNum] || 1) - 1;
+    if (p >= 1) renderPage(chNum, p);
+  });
+  if (nextBtn) nextBtn.addEventListener('click', function() {
+    var total = chapterPages[chNum] || fsTotal;
+    var p = (currentPage[chNum] || 1) + 1;
+    if (p <= total) renderPage(chNum, p);
+  });
 });
 
 function initSwipe(chNum) {
@@ -851,7 +1028,7 @@ function initSwipe(chNum) {
   el.addEventListener('touchend', function(e) {
     var diff = startX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) {
-      if (diff > 0) { var p = (currentPage[chNum]||1)+1; if(p<=fsTotal) renderPage(chNum,p); }
+      if (diff > 0) { var p = (currentPage[chNum]||1)+1; if(p<=(chapterPages[chNum]||fsTotal)) renderPage(chNum,p); }
       else { var p = (currentPage[chNum]||1)-1; if(p>=1) renderPage(chNum,p); }
     }
   }, {passive:true});
@@ -862,7 +1039,12 @@ function openFullscreen(chNum) {
   setVH(); // recalculate real viewport height
   fsActive = true;
   fsChNum = chNum;
+  fsTotal = chapterPages[chNum] || 16;
   fsPage = currentPage[chNum] || 1;
+  var fsTitleEl = document.getElementById('fs-title');
+  if (fsTitleEl && chapterTitles[currentLang] && chapterTitles[currentLang][chNum]) {
+    fsTitleEl.textContent = chapterTitles[currentLang][chNum];
+  }
   isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
   var overlay = document.getElementById('fs-overlay');
   overlay.classList.add('active');
@@ -944,6 +1126,11 @@ function fsRenderPage(pageNum, direction) {
   counter.textContent = String(pageNum).padStart(2,'0') + ' / ' + String(fsTotal).padStart(2,'0');
   prevBtn.disabled = pageNum <= 1;
   nextBtn.disabled = pageNum >= fsTotal;
+  var fsNextChBtn = document.getElementById('fs-next-chapter');
+  if (fsNextChBtn) {
+    var hasNext = !!getNextChapter(fsChNum);
+    fsNextChBtn.style.display = (pageNum >= fsTotal && hasNext) ? 'inline-block' : 'none';
+  }
   preloadPage(fsChNum, pageNum+1);
   preloadPage(fsChNum, pageNum+2);
   preloadPage(fsChNum, pageNum-1);
@@ -981,6 +1168,9 @@ function fsRenderPage(pageNum, direction) {
 
 document.getElementById('fs-prev').addEventListener('click', function() {
   if (fsPage > 1) fsRenderPage(fsPage-1,'prev');
+});
+document.getElementById('fs-next-chapter').addEventListener('click', function() {
+  openNextChapter(fsChNum, true);
 });
 document.getElementById('fs-next').addEventListener('click', function() {
   if (fsPage < fsTotal) fsRenderPage(fsPage+1,'next');
@@ -1134,16 +1324,22 @@ function setLanguage(lang, isInitial) {
   applyStaticTranslations(lang);
   renderFaq(lang);
   if (typeof refreshDynamicText === 'function') refreshDynamicText();
-  // Reset to page 1 of the new language set and re-render if the chapter is open
+  // Reset to page 1 of the new language set and re-render any open chapters
   if (!isInitial) {
     imageCache = {};
-    currentPage[1] = 1;
-    var pagesEl = document.getElementById('pages-1');
-    if (pagesEl && pagesEl.classList.contains('open')) {
-      preloadInitial(1);
-      renderPage(1, 1);
-    }
+    chapterOrder.forEach(function(chNum) {
+      currentPage[chNum] = 1;
+      var pagesEl = document.getElementById('pages-' + chNum);
+      if (pagesEl && pagesEl.classList.contains('open')) {
+        preloadInitial(chNum);
+        renderPage(chNum, 1);
+      }
+    });
     if (fsActive) {
+      var fsTitleEl = document.getElementById('fs-title');
+      if (fsTitleEl && chapterTitles[lang] && chapterTitles[lang][fsChNum]) {
+        fsTitleEl.textContent = chapterTitles[lang][fsChNum];
+      }
       preloadInitial(fsChNum);
       fsRenderPage(1, null);
     }
@@ -1352,7 +1548,7 @@ loadScript('https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js', f
     };
 
     window.refreshDynamicText = function() {
-      [1].forEach(function(chNum) {
+      [1, 2].forEach(function(chNum) {
         renderRatingResult(chNum);
         renderComments(chNum);
         var btn = document.getElementById('btn-rate-' + chNum);
@@ -1364,6 +1560,8 @@ loadScript('https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js', f
 
     initRating(1);
     initComments(1);
+    initRating(2);
+    initComments(2);
   });
 });
 </script>
